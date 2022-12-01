@@ -24,6 +24,12 @@ class MainScreen extends StatelessWidget {
             },
             child: const Text('Next'),
           ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pushNamed(context, '/tryings');
+            },
+            child: const Text('Dishes'),
+          ),
         ],
       ),
     );

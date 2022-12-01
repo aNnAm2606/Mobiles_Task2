@@ -1,3 +1,5 @@
+
+import 'package:deliverabl1task_2/screens/dish_screen.dart';
 import 'package:deliverabl1task_2/screens/main_screen.dart';
 import 'package:deliverabl1task_2/screens/home.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +18,7 @@ void main() async {
       routes: {
         '/': (context) => const MainScreen(),
         '/todo': (context) => const Home(),
+        '/tryings': (context) => const DishScreen(),
       },
     ),
   );
