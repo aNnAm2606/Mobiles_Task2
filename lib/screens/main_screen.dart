@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
@@ -10,13 +8,13 @@ class MainScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.grey[800],
       appBar: AppBar(
-        title: Text('Task 2'),
+        title: const Text('Task 2'),
         centerTitle: true,
         backgroundColor: Colors.orangeAccent,
       ),
       body: Column(
         children: [
-          Text(
+          const Text(
             'Main Screen',
             style: TextStyle(color: Colors.white),
           ),
@@ -24,7 +22,7 @@ class MainScreen extends StatelessWidget {
             onPressed: () {
               Navigator.pushNamed(context, '/todo');
             },
-            child: Text('Next'),
+            child: const Text('Next'),
           ),
         ],
       ),

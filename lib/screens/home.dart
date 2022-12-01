@@ -6,6 +6,7 @@ class Home extends StatefulWidget {
   const Home({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _HomeState createState() => _HomeState();
 }
 
@@ -40,7 +41,7 @@ class _HomeState extends State<Home> {
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) {
             return const Text('No Data');
-          } else
+          } else {
             return ListView.builder(
               itemCount: snapshot.data!.docs.length,
               itemBuilder: (BuildContext context, int index) {
@@ -72,10 +73,11 @@ class _HomeState extends State<Home> {
                 );
               },
             );
+          }
         },
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.yellowAccent,
+        backgroundColor: Colors.amberAccent,
         onPressed: () {
           showDialog(
             context: context,
