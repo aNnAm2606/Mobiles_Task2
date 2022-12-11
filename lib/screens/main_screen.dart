@@ -11,26 +11,47 @@ class MainScreen extends StatelessWidget {
         title: const Text('Task 2'),
         centerTitle: true,
         backgroundColor: Colors.orangeAccent,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.donut_small),
+            onPressed: (() {
+              Navigator.pushNamed(context, '/about');
+            }
+            ),
+          )
+        ],
       ),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const Text(
-            'Main Screen',
-            style: TextStyle(color: Colors.white),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pushNamed(context, '/todo');
-            },
-            child: const Text('Next'),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pushNamed(context, '/tryings');
-            },
-            child: const Text('Dishes'),
-          ),
+          newButtonDesign(context, 'todo', 'Favourite F'),
+          separation(),
+          newButtonDesign(context, 'tryings', 'tryings'),
+          separation(),
+          newButtonDesign(context, 'todo', 'Favourite Food'),
         ],
+      ),
+    );
+  }
+
+  SizedBox separation() {
+    return const SizedBox(
+      height: 10,
+      width: 400,
+    );
+  }
+
+  SizedBox newButtonDesign(
+      BuildContext context, String screen, String buttonName) {
+    return SizedBox(
+      height: 50,
+      width: 300,
+      child: ElevatedButton(
+        onPressed: () {
+          Navigator.pushNamed(context, '/$screen');
+        },
+        child: Text(buttonName),
       ),
     );
   }

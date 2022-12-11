@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-class Home extends StatefulWidget {
-  const Home({super.key});
+class FavouriteFood extends StatefulWidget {
+  const FavouriteFood({super.key});
 
   @override
   // ignore: library_private_types_in_public_api
-  _HomeState createState() => _HomeState();
+  _FavouriteFoodState createState() => _FavouriteFoodState();
 }
 
-class _HomeState extends State<Home> {
+class _FavouriteFoodState extends State<FavouriteFood> {
   List todoList = [];
   late String _userToDo;
 
@@ -33,7 +33,7 @@ class _HomeState extends State<Home> {
     return Scaffold(
       backgroundColor: Colors.grey[800],
       appBar: AppBar(
-        title: const Text('Todo List'),
+        title: const Text('Favourite Food'),
         centerTitle: true,
       ),
       body: StreamBuilder(
