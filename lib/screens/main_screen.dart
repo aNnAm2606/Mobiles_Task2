@@ -16,8 +16,7 @@ class MainScreen extends StatelessWidget {
             icon: const Icon(Icons.donut_small),
             onPressed: (() {
               Navigator.pushNamed(context, '/about');
-            }
-            ),
+            }),
           )
         ],
       ),
@@ -30,8 +29,30 @@ class MainScreen extends StatelessWidget {
           newButtonDesign(context, 'tryings', 'tryings'),
           separation(),
           newButtonDesign(context, 'todo', 'Favourite Food'),
+          separation(),
+          SizedBox(
+            height: 50,
+            width: 300,
+            child: ElevatedButton(
+              onPressed: () {
+                showcalendar(context).then((date) {
+                  Navigator.pushNamed(context, 'day');
+                });
+              },
+              child: const Text('calendarara'),
+            ),
+          ),
         ],
       ),
+    );
+  }
+
+  Future<DateTime?> showcalendar(BuildContext con) {
+    return showDatePicker(
+      context: con,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.utc(2022),
+      lastDate: DateTime.utc(2023, 12, 31),
     );
   }
 

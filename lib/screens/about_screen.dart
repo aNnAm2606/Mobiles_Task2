@@ -19,26 +19,30 @@ class About extends StatelessWidget {
       ]),
       body: Column(
         children: [
-          Expanded(child: _GroupInfo(), flex: 1,),
-          Expanded(child: _Messages(), flex: 6),
+          Expanded(
+            flex: 1,
+            child: _GroupInfo(),
+          ),
+          Expanded(
+            flex: 6,
+            child: _Messages(),
+          ),
         ],
       ),
     );
   }
 }
 
-
 class _Messages extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final db = FirebaseFirestore.instance;
     return StreamBuilder(
-      stream: db
-          .collection("/group_name/mJ8ZN6d2MmZdTQCMwRbr/members")
-          .snapshots(),
+      stream:
+          db.collection("/group_name/mJ8ZN6 d2MmZdTQCMwRbr/members").snapshots(),
       builder: (
         BuildContext context,
-        AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot,
+        AsyncSnapshot<QuerySnapshot> snapshot,
       ) {
         if (snapshot.hasError) {
           return ErrorWidget(snapshot.error.toString());
@@ -49,7 +53,6 @@ class _Messages extends StatelessWidget {
         final querySnap = snapshot.data!;
         final docs = querySnap.docs;
         return ListView.builder(
-          reverse: true,
           itemCount: docs.length,
           itemBuilder: (context, index) {
             final message = docs[index];
@@ -57,7 +60,8 @@ class _Messages extends StatelessWidget {
               children: [
                 Container(
                   padding: const EdgeInsets.all(6),
-                  margin: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
                   color: Colors.white,
                   child: Text(message['member']),
                 ),
