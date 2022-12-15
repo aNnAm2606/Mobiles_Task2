@@ -23,7 +23,8 @@ class DishScreen extends StatelessWidget {
           appBar: AppBar(title: Text(userList.name)),
           body: Column(
             children: [
-              Expanded(
+              const Expanded(flex: 1, child: Text('Ingredients' , style: TextStyle(fontSize: 20))),
+              Expanded( flex: 11,
                 child: ListView.builder(
                   itemCount: userList.ingredients.length,
                   itemBuilder: (context, index) {

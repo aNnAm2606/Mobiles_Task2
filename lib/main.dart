@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
         '/todo': (context) => const FavouriteFood(),
         '/tryings': (context) => const DishScreen(),
         '/about': (context) => const About(),
-        '/day': (context) => const DayScreen(),
+        '/day': (context) => DayScreen(),
       },
     );
   }

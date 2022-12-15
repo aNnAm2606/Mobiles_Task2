@@ -24,37 +24,18 @@ class MainScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          newButtonDesign(context, 'todo', 'Favourite F'),
+         
+          newButtonDesign(context, 'day', 'Meal Diary'),
           separation(),
-          newButtonDesign(context, 'tryings', 'tryings'),
+          newButtonDesign(context, 'tryings', 'Recipes'),
           separation(),
           newButtonDesign(context, 'todo', 'Favourite Food'),
           separation(),
-          SizedBox(
-            height: 50,
-            width: 300,
-            child: ElevatedButton(
-              onPressed: () {
-                showcalendar(context).then((date) {
-                  Navigator.pushNamed(context, 'day');
-                });
-              },
-              child: const Text('calendarara'),
-            ),
-          ),
         ],
       ),
     );
   }
 
-  Future<DateTime?> showcalendar(BuildContext con) {
-    return showDatePicker(
-      context: con,
-      initialDate: DateTime.now(),
-      firstDate: DateTime.utc(2022),
-      lastDate: DateTime.utc(2023, 12, 31),
-    );
-  }
 
   SizedBox separation() {
     return const SizedBox(
@@ -63,17 +44,19 @@ class MainScreen extends StatelessWidget {
     );
   }
 
-  SizedBox newButtonDesign(
-      BuildContext context, String screen, String buttonName) {
-    return SizedBox(
-      height: 50,
-      width: 300,
-      child: ElevatedButton(
-        onPressed: () {
-          Navigator.pushNamed(context, '/$screen');
-        },
-        child: Text(buttonName),
-      ),
-    );
-  }
+
+
+SizedBox newButtonDesign(
+    BuildContext context, String screen, String buttonName) {
+  return SizedBox(
+    height: 50,
+    width: 300,
+    child: ElevatedButton(
+      onPressed: () {
+        Navigator.pushNamed(context, '/$screen');
+      },
+      child: Text(buttonName),
+    ),
+  );
+}
 }

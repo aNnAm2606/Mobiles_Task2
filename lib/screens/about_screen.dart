@@ -23,53 +23,8 @@ class About extends StatelessWidget {
             flex: 1,
             child: _GroupInfo(),
           ),
-          Expanded(
-            flex: 6,
-            child: _Messages(),
-          ),
         ],
       ),
-    );
-  }
-}
-
-class _Messages extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final db = FirebaseFirestore.instance;
-    return StreamBuilder(
-      stream:
-          db.collection("/group_name/mJ8ZN6 d2MmZdTQCMwRbr/members").snapshots(),
-      builder: (
-        BuildContext context,
-        AsyncSnapshot<QuerySnapshot> snapshot,
-      ) {
-        if (snapshot.hasError) {
-          return ErrorWidget(snapshot.error.toString());
-        }
-        if (!snapshot.hasData) {
-          return const Center(child: CircularProgressIndicator());
-        }
-        final querySnap = snapshot.data!;
-        final docs = querySnap.docs;
-        return ListView.builder(
-          itemCount: docs.length,
-          itemBuilder: (context, index) {
-            final message = docs[index];
-            return Row(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(6),
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
-                  color: Colors.white,
-                  child: Text(message['member']),
-                ),
-              ],
-            );
-          },
-        );
-      },
     );
   }
 }
@@ -95,18 +50,22 @@ class _GroupInfo extends StatelessWidget {
         //final docs = docSnap.data.;
         //final docs = docSnap.docs;
         return Scaffold(
-          body: Row(
-            children: [
-              Text(docSnap['group_name'], style: const TextStyle(fontSize: 24)),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: 1,
-                  itemBuilder: (context, index) {
-                    return const ListTile();
-                  },
+          body: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(docSnap['group_name'], style: const TextStyle(fontSize: 24)),
+                const SizedBox(height: 10,),
+                Text(
+                  docSnap['member_01'],
+                  style: const TextStyle(fontSize: 18),
                 ),
-              )
-            ],
+                Text(
+                  docSnap['member_02'],
+                  style: const TextStyle(fontSize: 18),
+                ),
+              ],
+            ),
           ),
         );
       },
