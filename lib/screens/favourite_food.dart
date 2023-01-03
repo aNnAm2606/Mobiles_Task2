@@ -54,7 +54,9 @@ class _FavouriteFoodState extends State<FavouriteFood> {
         stream: FirebaseFirestore.instance.collection('items').snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) {
-            return const Text('No Data');
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
           } else {
             return ListView.builder(
               itemCount: snapshot.data!.docs.length,
@@ -77,7 +79,7 @@ class _FavouriteFoodState extends State<FavouriteFood> {
                                 .delete();
                           },
                           icon: const Icon(
-                            Icons.delete_sweep,
+                            Icons.star,
                             color: Colors.deepOrange,
                           ),
                         ),
@@ -131,7 +133,7 @@ class _FavouriteFoodState extends State<FavouriteFood> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Color.fromARGB(255, 255, 102, 64),
+        backgroundColor: const Color.fromARGB(255, 255, 102, 64),
         onPressed: () {
           showDialog(
             context: context,
