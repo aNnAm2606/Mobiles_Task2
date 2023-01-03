@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 
+import 'package:deliverabl1task_2/firebase_options.dart';
+
 class FavouriteFood extends StatefulWidget {
   const FavouriteFood({super.key});
 
@@ -13,6 +15,8 @@ class FavouriteFood extends StatefulWidget {
 class _FavouriteFoodState extends State<FavouriteFood> {
   List todoList = [];
   late String _userToDo;
+
+  String name = "";
 
   void initFirebase() async {
     WidgetsFlutterBinding.ensureInitialized();
@@ -33,8 +37,18 @@ class _FavouriteFoodState extends State<FavouriteFood> {
     return Scaffold(
       backgroundColor: Colors.grey[800],
       appBar: AppBar(
-        title: const Text('Favourite Food'),
-        centerTitle: true,
+        title: Card(
+          child: TextField(
+            decoration: const InputDecoration(
+                prefixIcon: Icon(Icons.search),
+                hintText: 'Search Favourite Food...'),
+            onChanged: (value) {
+              setState(() {
+                name = value;
+              });
+            },
+          ),
+        ),
       ),
       body: StreamBuilder(
         stream: FirebaseFirestore.instance.collection('items').snapshots(),
@@ -45,39 +59,79 @@ class _FavouriteFoodState extends State<FavouriteFood> {
             return ListView.builder(
               itemCount: snapshot.data!.docs.length,
               itemBuilder: (BuildContext context, int index) {
-                return Dismissible(
-                  key: Key(snapshot.data!.docs[index].id),
-                  child: Card(
-                    child: ListTile(
-                      title: Text(snapshot.data!.docs[index].get('item')),
-                      trailing: IconButton(
-                        onPressed: () {
-                          FirebaseFirestore.instance
-                              .collection('items')
-                              .doc(snapshot.data!.docs[index].id)
-                              .delete();
-                        },
-                        icon: const Icon(
-                          Icons.delete_sweep,
-                          color: Colors.deepOrange,
+                var data =
+                    snapshot.data!.docs[index].data() as Map<String, dynamic>;
+                if (name.isEmpty) {
+                  return Dismissible(
+                    key: Key(snapshot.data!.docs[index].id),
+                    child: Card(
+                      child: ListTile(
+                        title: Text(
+                          data['name'],
+                        ),
+                        trailing: IconButton(
+                          onPressed: () {
+                            FirebaseFirestore.instance
+                                .collection('items')
+                                .doc(snapshot.data!.docs[index].id)
+                                .delete();
+                          },
+                          icon: const Icon(
+                            Icons.delete_sweep,
+                            color: Colors.deepOrange,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  onDismissed: (direction) {
-                    FirebaseFirestore.instance
-                        .collection('items')
-                        .doc(snapshot.data!.docs[index].id)
-                        .delete();
-                  },
-                );
+                    onDismissed: (direction) {
+                      FirebaseFirestore.instance
+                          .collection('items')
+                          .doc(snapshot.data!.docs[index].id)
+                          .delete();
+                    },
+                  );
+                }
+                if (data['name']
+                    .toString()
+                    .toLowerCase()
+                    .startsWith(name.toLowerCase())) {
+                  return Dismissible(
+                    key: Key(snapshot.data!.docs[index].id),
+                    child: Card(
+                      child: ListTile(
+                        title: Text(
+                          data['name'],
+                        ),
+                        trailing: IconButton(
+                          onPressed: () {
+                            FirebaseFirestore.instance
+                                .collection('items')
+                                .doc(snapshot.data!.docs[index].id)
+                                .delete();
+                          },
+                          icon: const Icon(
+                            Icons.delete_sweep,
+                            color: Colors.deepOrange,
+                          ),
+                        ),
+                      ),
+                    ),
+                    onDismissed: (direction) {
+                      FirebaseFirestore.instance
+                          .collection('items')
+                          .doc(snapshot.data!.docs[index].id)
+                          .delete();
+                    },
+                  );
+                }
+                return Container();
               },
             );
           }
         },
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.amberAccent,
+        backgroundColor: Color.fromARGB(255, 255, 102, 64),
         onPressed: () {
           showDialog(
             context: context,
@@ -94,7 +148,7 @@ class _FavouriteFoodState extends State<FavouriteFood> {
                     onPressed: () {
                       FirebaseFirestore.instance
                           .collection('items')
-                          .add({'item': _userToDo});
+                          .add({'name': _userToDo});
 
                       Navigator.of(context).pop();
                     },
