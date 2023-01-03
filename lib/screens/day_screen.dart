@@ -7,29 +7,91 @@ class DayScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("About"), actions: [
+      backgroundColor: Colors.grey[800],
+      appBar:
+          AppBar(title: Text("${day.day}/${day.month}/${day.year}"), actions: [
         ElevatedButton(
-          onPressed: (){
+          onPressed: () {
             Navigator.of(context).pushNamed('/');
           },
           child: const Icon(Icons.login),
         )
       ]),
-      body: Row(
-        children: [
-          Text('${day.day}/'),
-          Text('${day.month}/'),
-          Text('${day.year}'),
-        ],
+      body: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Column(
+          children: [
+            ListTile(
+              title: const Text('Breakfast'),
+              textColor: Colors.white,
+              tileColor: Colors.orangeAccent,
+              selectedTileColor: const Color.fromARGB(255, 255, 99, 64),
+              trailing: IconButton(
+                onPressed: () {
+                  //setState(() {});
+                },
+                icon: const Icon(
+                  Icons.add,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+            const Padding(padding: EdgeInsets.only(bottom: 10)),
+            ListTile(
+              title: const Text('Lunch'),
+              textColor: Colors.white,
+              tileColor: Colors.orangeAccent,
+              selectedTileColor: const Color.fromARGB(255, 255, 99, 64),
+              trailing: IconButton(
+                onPressed: () {
+                  //setState(() {});
+                },
+                icon: const Icon(
+                  Icons.add,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+            const Padding(padding: EdgeInsets.only(bottom: 10)),
+            ListTile(
+              title: const Text('Dinner'),
+              textColor: Colors.white,
+              tileColor: Colors.orangeAccent,
+              selectedTileColor: const Color.fromARGB(255, 255, 99, 64),
+              trailing: IconButton(
+                onPressed: () {
+                  //setState(() {});
+                },
+                icon: const Icon(
+                  Icons.add,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+            const Padding(padding: EdgeInsets.only(bottom: 10)),
+            ListTile(
+              title: const Text('Snacks'),
+              textColor: Colors.white,
+              tileColor: Colors.orangeAccent,
+              selectedTileColor: const Color.fromARGB(255, 255, 99, 64),
+              trailing: IconButton(
+                onPressed: () {
+                  //setState(() {});
+                },
+                icon: const Icon(
+                  Icons.add,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
-      
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.calendar_month),
-        
         onPressed: () {
           showcalendar(context).then(
-            (value) {
-            },
+            (value) {},
           );
         },
       ),

@@ -9,6 +9,7 @@ class About extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[800],
       appBar: AppBar(title: const Text("About"), actions: [
         ElevatedButton(
           onPressed: () {
@@ -54,8 +55,11 @@ class _GroupInfo extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text(docSnap['group_name'], style: const TextStyle(fontSize: 24)),
-                const SizedBox(height: 10,),
+                Text(docSnap['group_name'],
+                    style: const TextStyle(fontSize: 24)),
+                const SizedBox(
+                  height: 10,
+                ),
                 Text(
                   docSnap['member_01'],
                   style: const TextStyle(fontSize: 18),

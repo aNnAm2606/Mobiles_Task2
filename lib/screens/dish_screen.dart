@@ -20,11 +20,15 @@ class DishScreen extends StatelessWidget {
         }
         final userList = snapshot.data!;
         return Scaffold(
+          backgroundColor: Colors.grey[800],
           appBar: AppBar(title: Text(userList.name)),
           body: Column(
             children: [
-              const Expanded(flex: 1, child: Text('Ingredients' , style: TextStyle(fontSize: 20))),
-              Expanded( flex: 11,
+              const Expanded(
+                  flex: 1,
+                  child: Text('Ingredients', style: TextStyle(fontSize: 20))),
+              Expanded(
+                flex: 11,
                 child: ListView.builder(
                   itemCount: userList.ingredients.length,
                   itemBuilder: (context, index) {

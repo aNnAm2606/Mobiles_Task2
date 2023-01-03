@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-import 'package:deliverabl1task_2/firebase_options.dart';
-
 class FavouriteFood extends StatefulWidget {
   const FavouriteFood({super.key});
 
@@ -139,7 +137,7 @@ class _FavouriteFoodState extends State<FavouriteFood> {
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
-                title: const Text('Add an Element'),
+                title: const Text('Add a Favourite Food'),
                 content: TextField(
                   onChanged: (String value) {
                     _userToDo = value;

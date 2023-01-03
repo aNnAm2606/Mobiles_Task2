@@ -10,7 +10,7 @@ class MainScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Task 2'),
         centerTitle: true,
-        backgroundColor: Colors.orangeAccent,
+        backgroundColor: Color.fromARGB(255, 255, 80, 64),
         actions: [
           IconButton(
             icon: const Icon(Icons.donut_small),
@@ -24,7 +24,6 @@ class MainScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-         
           newButtonDesign(context, 'day', 'Meal Diary'),
           separation(),
           newButtonDesign(context, 'tryings', 'Recipes'),
@@ -36,7 +35,6 @@ class MainScreen extends StatelessWidget {
     );
   }
 
-
   SizedBox separation() {
     return const SizedBox(
       height: 10,
@@ -44,19 +42,17 @@ class MainScreen extends StatelessWidget {
     );
   }
 
-
-
-SizedBox newButtonDesign(
-    BuildContext context, String screen, String buttonName) {
-  return SizedBox(
-    height: 50,
-    width: 300,
-    child: ElevatedButton(
-      onPressed: () {
-        Navigator.pushNamed(context, '/$screen');
-      },
-      child: Text(buttonName),
-    ),
-  );
-}
+  SizedBox newButtonDesign(
+      BuildContext context, String screen, String buttonName) {
+    return SizedBox(
+      height: 50,
+      width: 300,
+      child: ElevatedButton(
+        onPressed: () {
+          Navigator.pushNamed(context, '/$screen');
+        },
+        child: Text(buttonName),
+      ),
+    );
+  }
 }
