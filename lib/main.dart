@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const MainScreen(),
         '/todo': (context) => const FavouriteFood(),
-        '/tryings': (context) => const DishScreen(),
+        '/tryings': (context) => DishScreen(),
         '/about': (context) => const About(),
         '/day': (context) => DayScreen(),
       },
