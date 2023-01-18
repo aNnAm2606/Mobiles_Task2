@@ -4,6 +4,7 @@ import 'package:deliverabl1task_2/screens/day_screen.dart';
 import 'package:deliverabl1task_2/screens/dish_screen.dart';
 import 'package:deliverabl1task_2/screens/main_screen.dart';
 import 'package:deliverabl1task_2/screens/favourite_food.dart';
+import 'package:deliverabl1task_2/screens/login_register.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
         '/tryings': (context) => DishScreen(),
         '/about': (context) => const About(),
         '/day': (context) => DayScreen(),
+        '/login': (context) => const MainScreen(),
       },
     );
   }
