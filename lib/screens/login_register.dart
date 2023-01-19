@@ -1,7 +1,10 @@
-import 'dart:html';
+// ignore_for_file: no_leading_underscores_for_local_identifiers
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:deliverabl1task_2/services/auth.dart';
+import 'package:deliverabl1task_2/services/users.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class AuthorizationPage extends StatefulWidget {
   const AuthorizationPage({super.key});
@@ -11,18 +14,21 @@ class AuthorizationPage extends StatefulWidget {
 }
 
 class _AuthorizationPageState extends State<AuthorizationPage> {
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   late String _email;
   late String _password;
   bool showLogin = true;
+
+  final AuthService _authService = AuthService();
 
   @override
   Widget build(BuildContext context) {
     Widget _logo() {
       return Padding(
         padding: const EdgeInsets.only(top: 100),
+        // ignore: avoid_unnecessary_containers
         child: Container(
           child: const Align(
             child: Text(
@@ -40,34 +46,34 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
     Widget _input(Icon icon, String hint, TextEditingController controller,
         bool obscure) {
       return Container(
-        padding: EdgeInsets.only(
+        padding: const EdgeInsets.only(
           left: 20,
           right: 20,
         ),
         child: TextField(
           controller: controller,
           obscureText: obscure,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 20,
             color: Colors.white,
           ),
           decoration: InputDecoration(
-            hintStyle: TextStyle(
+            hintStyle: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 20,
                 color: Colors.white30),
             hintText: hint,
-            focusedBorder: OutlineInputBorder(
+            focusedBorder: const OutlineInputBorder(
               borderSide: BorderSide(color: Colors.white, width: 3),
             ),
-            enabledBorder: OutlineInputBorder(
+            enabledBorder: const OutlineInputBorder(
               borderSide: BorderSide(color: Colors.white54, width: 1),
             ),
             prefixIcon: Padding(
-              padding: EdgeInsets.only(left: 10, right: 10),
+              padding: const EdgeInsets.only(left: 10, right: 10),
               child: IconTheme(
-                  data: IconThemeData(
-                      color: const Color.fromARGB(255, 255, 99, 64)),
+                  data: const IconThemeData(
+                      color: Color.fromARGB(255, 255, 99, 64)),
                   child: icon),
             ),
           ),
@@ -81,12 +87,12 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
           func();
         },
         style: ElevatedButton.styleFrom(
-          primary: Colors.red, // background
-          onPrimary: Colors.white, // foreground
+          foregroundColor: Colors.white,
+          backgroundColor: Colors.red, // foreground
         ),
         child: Text(
           text,
-          style: TextStyle(
+          style: const TextStyle(
             fontWeight: FontWeight.bold,
             color: Colors.white,
             fontSize: 20,
@@ -102,28 +108,28 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
         child: Column(
           children: <Widget>[
             Padding(
-              padding: EdgeInsets.only(bottom: 20, top: 10),
+              padding: const EdgeInsets.only(bottom: 20, top: 10),
               child: _input(
-                Icon(Icons.email),
+                const Icon(Icons.email),
                 'EMAIL',
                 _emailController,
                 false,
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(bottom: 20, top: 10),
+              padding: const EdgeInsets.only(bottom: 20, top: 10),
               child: _input(
-                Icon(Icons.lock),
+                const Icon(Icons.lock),
                 'PASSWORD',
                 _passwordController,
                 true,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Padding(
-              padding: EdgeInsets.only(left: 20, right: 20),
+              padding: const EdgeInsets.only(left: 20, right: 20),
               child: Container(
                 height: 50,
                 width: MediaQuery.of(context).size.width,
@@ -135,12 +141,50 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
       );
     }
 
-    void _buttonAction() {
+    void _loginButtonAction() async {
       _email = _emailController.text;
       _password = _passwordController.text;
 
-      _emailController.clear();
-      _passwordController.clear();
+      if (_email.isEmpty || _password.isEmpty) return;
+
+      AuthUser? user = await _authService.signInWithEmailAndPassword(
+          _email.trim(), _password..trim());
+      if (user == null) {
+        Fluttertoast.showToast(
+            msg: "Can't sign you in, please check you email and password",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0);
+      } else {
+        _emailController.clear();
+        _passwordController.clear();
+      }
+    }
+
+    void _registerButtonAction() async {
+      _email = _emailController.text;
+      _password = _passwordController.text;
+
+      if (_email.isEmpty || _password.isEmpty) return;
+
+      AuthUser? user = await _authService.registerWithEmailAndPassword(
+          _email.trim(), _password..trim());
+      if (user == null) {
+        Fluttertoast.showToast(
+            msg: "Can't register you in, please check you email and password",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0);
+      } else {
+        _emailController.clear();
+        _passwordController.clear();
+      }
     }
 
     Widget _bottomWave() {
@@ -168,12 +212,12 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
                     children: [
                       _form(
                         'LOGIN',
-                        _buttonAction,
+                        _loginButtonAction,
                       ),
                       Padding(
-                        padding: EdgeInsets.all(10),
+                        padding: const EdgeInsets.all(10),
                         child: GestureDetector(
-                          child: Text(
+                          child: const Text(
                             'Not registered yet? Register',
                             style: TextStyle(fontSize: 20, color: Colors.white),
                           ),
@@ -190,12 +234,12 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
                     children: [
                       _form(
                         'REGISTER',
-                        _buttonAction,
+                        _registerButtonAction,
                       ),
                       Padding(
-                        padding: EdgeInsets.all(10),
+                        padding: const EdgeInsets.all(10),
                         child: GestureDetector(
-                          child: Text(
+                          child: const Text(
                             'ALready registered? Login',
                             style: TextStyle(fontSize: 20, color: Colors.white),
                           ),

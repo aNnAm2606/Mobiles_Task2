@@ -1,3 +1,4 @@
+import 'package:deliverabl1task_2/services/auth.dart';
 import 'package:flutter/material.dart';
 
 class MainScreen extends StatelessWidget {
@@ -8,16 +9,26 @@ class MainScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.grey[800],
       appBar: AppBar(
-        title: const Text('Task 2'),
+        title: const Text(
+          'FoodIZGood',
+          style: TextStyle(
+              fontSize: 45, fontWeight: FontWeight.bold, color: Colors.white),
+        ),
         centerTitle: true,
         backgroundColor: Color.fromARGB(255, 255, 80, 64),
         actions: [
           IconButton(
-            icon: const Icon(Icons.donut_small),
+            icon: const Icon(Icons.info),
             onPressed: (() {
               Navigator.pushNamed(context, '/about');
             }),
-          )
+          ),
+          IconButton(
+              color: Colors.white,
+              onPressed: (() {
+                AuthService().logOut();
+              }),
+              icon: const Icon(Icons.exit_to_app))
         ],
       ),
       body: Column(
