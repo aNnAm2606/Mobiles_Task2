@@ -1,8 +1,7 @@
-// ignore_for_file: no_leading_underscores_for_local_identifiers
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deliverabl1task_2/services/auth.dart';
 import 'package:deliverabl1task_2/services/users.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -28,7 +27,6 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
     Widget _logo() {
       return Padding(
         padding: const EdgeInsets.only(top: 100),
-        // ignore: avoid_unnecessary_containers
         child: Container(
           child: const Align(
             child: Text(
@@ -87,8 +85,8 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
           func();
         },
         style: ElevatedButton.styleFrom(
-          foregroundColor: Colors.white,
-          backgroundColor: Colors.red, // foreground
+          primary: Colors.red, // background
+          onPrimary: Colors.white, // foreground
         ),
         child: Text(
           text,
@@ -240,7 +238,7 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
                         padding: const EdgeInsets.all(10),
                         child: GestureDetector(
                           child: const Text(
-                            'ALready registered? Login',
+                            'Already registered? Login',
                             style: TextStyle(fontSize: 20, color: Colors.white),
                           ),
                           onTap: (() {

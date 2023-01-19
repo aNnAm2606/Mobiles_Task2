@@ -12,10 +12,10 @@ class MainScreen extends StatelessWidget {
         title: const Text(
           'FoodIZGood',
           style: TextStyle(
-              fontSize: 45, fontWeight: FontWeight.bold, color: Colors.white),
+              fontSize: 35, fontWeight: FontWeight.bold, color: Colors.white),
         ),
         centerTitle: true,
-        backgroundColor: Color.fromARGB(255, 255, 80, 64),
+        backgroundColor: const Color.fromARGB(255, 255, 80, 64),
         actions: [
           IconButton(
             icon: const Icon(Icons.info),
@@ -62,7 +62,9 @@ class MainScreen extends StatelessWidget {
         onPressed: () {
           Navigator.pushNamed(context, '/$screen');
         },
-        child: Text(buttonName),
+        child: Text(
+          buttonName,
+        ),
       ),
     );
   }

@@ -6,7 +6,6 @@ import 'package:deliverabl1task_2/screens/loading.dart';
 import 'package:deliverabl1task_2/screens/main_screen.dart';
 import 'package:deliverabl1task_2/screens/favourite_food.dart';
 import 'package:deliverabl1task_2/screens/login_register.dart';
-import 'package:deliverabl1task_2/screens/loading.dart';
 import 'package:deliverabl1task_2/services/auth.dart';
 import 'package:deliverabl1task_2/services/users.dart';
 import 'package:flutter/material.dart';
@@ -41,12 +40,12 @@ class MyApp extends StatelessWidget {
         initialRoute: '/',
         routes: {
           '/': (context) => const LoadingPage(),
-          //const MainScreen(),
+          '/main': (context) => const MainScreen(),
           '/todo': (context) => const FavouriteFood(),
-          '/tryings': (context) => DishScreen(),
+          '/tryings': (context) => const DishScreen(),
           '/about': (context) => const About(),
           '/day': (context) => DayScreen(),
-          '/login': (context) => AuthorizationPage(),
+          '/login': (context) => const AuthorizationPage(),
         },
       ),
     );

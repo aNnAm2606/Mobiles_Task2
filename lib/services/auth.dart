@@ -12,6 +12,7 @@ class AuthService {
       User? user = result.user;
       return AuthUser.fromFirebase(user!);
     } on FirebaseException catch (error) {
+      // ignore: avoid_print
       print(error);
       return null;
     }
@@ -25,6 +26,7 @@ class AuthService {
       User? user = result.user;
       return AuthUser.fromFirebase(user!);
     } on FirebaseException catch (error) {
+      // ignore: avoid_print
       print(error);
       return null;
     }
