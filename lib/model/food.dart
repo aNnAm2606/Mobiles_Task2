@@ -24,7 +24,6 @@ class Dish {
   // nationality = json["nat"],
   // avatarUrl = json["picture"]["large"];
 
-  
 }
 
 Future<Dish> loadUserList() async {
@@ -32,7 +31,7 @@ Future<Dish> loadUserList() async {
       "https://world.openfoodfacts.org/api/v0/product/737628064502.json");
   final response = await http.get(uri);
   final json = jsonDecode(response.body);
-  
+
   Dish dishTry = Dish.fromJson(json);
   dishTry.addIngredients(loadIngredients(json));
   return dishTry;

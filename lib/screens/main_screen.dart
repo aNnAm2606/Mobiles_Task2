@@ -82,26 +82,25 @@ class _MainScreenState extends State<MainScreen> {
                 icon: const Icon(Icons.exit_to_app))
           ],
         ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            newButtonDesign(context, 'day', 'Meal Diary'),
-            separation(),
-            newButtonDesign(context, 'tryings', 'Recipes'),
-            separation(),
-            newButtonDesign(context, 'todo', 'Favourite Food'),
-            separation(),
-          ],
+        body: Center(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 20, top: 70),
+                child: newButtonDesign(context, 'day', 'Meal Diary'),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 20, top: 10),
+                child: newButtonDesign(context, 'tryings', 'Recipes'),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 20, top: 10),
+                child: newButtonDesign(context, 'favourite', 'Favourite Food'),
+              ),
+            ],
+          ),
         ),
         bottomNavigationBar: curvedNavigationBar);
-  }
-
-  SizedBox separation() {
-    return const SizedBox(
-      height: 10,
-      width: 400,
-    );
   }
 
   SizedBox newButtonDesign(
