@@ -1,32 +1,97 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
-class About extends StatelessWidget {
+class About extends StatefulWidget {
   const About({
     Key? key,
   }) : super(key: key);
 
   @override
+  State<About> createState() => _AboutState();
+}
+
+class _AboutState extends State<About> {
+  int sectionIndex = 3;
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey[800],
-      appBar: AppBar(title: const Text("About"), actions: [
-        ElevatedButton(
-          onPressed: () {
-            Navigator.of(context).pushNamed('/');
-          },
-          child: const Icon(Icons.login),
-        )
-      ]),
-      body: Column(
-        children: [
-          Expanded(
-            flex: 1,
-            child: _GroupInfo(),
+    var curvedNavigationBar = CurvedNavigationBar(
+      items: [
+        IconButton(
+          icon: const Icon(
+            Icons.edit_calendar,
           ),
-        ],
-      ),
+          color: Colors.white,
+          onPressed: () {
+            Navigator.pushNamed(context, '/day');
+          },
+        ),
+        IconButton(
+          icon: const Icon(
+            Icons.search,
+          ),
+          color: Colors.white,
+          onPressed: () {
+            Navigator.pushNamed(context, '/tryings');
+          },
+        ),
+        IconButton(
+          icon: const Icon(
+            Icons.star,
+          ),
+          color: Colors.white,
+          onPressed: () {
+            Navigator.pushNamed(context, '/favourite');
+          },
+        ),
+        IconButton(
+          icon: const Icon(
+            Icons.info,
+          ),
+          color: Colors.white,
+          onPressed: () {
+            Navigator.pushNamed(context, '/about');
+          },
+        ),
+      ],
+      index: 3,
+      height: 50,
+      color: Colors.white.withOpacity(0.5),
+      buttonBackgroundColor: Colors.red,
+      backgroundColor: const Color.fromARGB(255, 52, 49, 49),
+      animationCurve: Curves.easeInOut,
+      animationDuration: const Duration(milliseconds: 500),
+      onTap: (int index) {
+        setState(() => sectionIndex = index);
+      },
     );
+    return Scaffold(
+        backgroundColor: Colors.grey[800],
+        appBar: AppBar(
+          title: const Text("About"),
+          actions: [
+            IconButton(
+                color: Colors.white,
+                onPressed: (() {
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    '/',
+                    (route) => false,
+                  );
+                }),
+                icon: const Icon(Icons.home))
+          ],
+        ),
+        body: Column(
+          children: [
+            Expanded(
+              flex: 1,
+              child: _GroupInfo(),
+            ),
+          ],
+        ),
+        bottomNavigationBar: curvedNavigationBar);
   }
 }
 

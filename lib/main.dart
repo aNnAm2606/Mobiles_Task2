@@ -35,16 +35,16 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          primarySwatch: Colors.deepOrange,
+          primarySwatch: Colors.red,
         ),
         initialRoute: '/',
         routes: {
           '/': (context) => const LoadingPage(),
           '/main': (context) => const MainScreen(),
-          '/todo': (context) => const FavouriteFood(),
+          '/day': (context) => DayScreen(),
+          '/favourite': (context) => const FavouriteFood(),
           '/tryings': (context) => const DishScreen(),
           '/about': (context) => const About(),
-          '/day': (context) => DayScreen(),
           '/login': (context) => const AuthorizationPage(),
         },
       ),

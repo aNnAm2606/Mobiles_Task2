@@ -1,7 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+// ignore_for_file: no_leading_underscores_for_local_identifiers, avoid_unnecessary_containers
+
 import 'package:deliverabl1task_2/services/auth.dart';
 import 'package:deliverabl1task_2/services/users.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -34,7 +34,7 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
               style: TextStyle(
                   fontSize: 45,
                   fontWeight: FontWeight.bold,
-                  color: const Color.fromARGB(255, 255, 99, 64)),
+                  color: Color.fromARGB(255, 255, 99, 64)),
             ),
           ),
         ),
@@ -79,14 +79,14 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
       );
     }
 
-    Widget _button(String text, void func()) {
+    Widget _button(String text, void Function() func) {
       return ElevatedButton(
         onPressed: () {
           func();
         },
         style: ElevatedButton.styleFrom(
-          primary: Colors.red, // background
-          onPrimary: Colors.white, // foreground
+          foregroundColor: Colors.white,
+          backgroundColor: Colors.red, // foreground
         ),
         child: Text(
           text,
@@ -99,9 +99,7 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
       );
     }
 
-    ;
-
-    Widget _form(String label, void func()) {
+    Widget _form(String label, void Function() func) {
       return Container(
         child: Column(
           children: <Widget>[
@@ -128,7 +126,7 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
             ),
             Padding(
               padding: const EdgeInsets.only(left: 20, right: 20),
-              child: Container(
+              child: SizedBox(
                 height: 50,
                 width: MediaQuery.of(context).size.width,
                 child: _button(label, func),
@@ -188,14 +186,14 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
     Widget _bottomWave() {
       return Expanded(
         child: Align(
+          alignment: Alignment.bottomCenter,
           child: ClipPath(
+            clipper: BottomWaveClipper(),
             child: Container(
               color: Colors.white,
               height: 300,
             ),
-            clipper: BottomWaveClipper(),
           ),
-          alignment: Alignment.bottomCenter,
         ),
       );
     }
@@ -215,15 +213,15 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
                       Padding(
                         padding: const EdgeInsets.all(10),
                         child: GestureDetector(
-                          child: const Text(
-                            'Not registered yet? Register',
-                            style: TextStyle(fontSize: 20, color: Colors.white),
-                          ),
                           onTap: (() {
                             setState(() {
                               showLogin = false;
                             });
                           }),
+                          child: const Text(
+                            'Not registered yet? Register',
+                            style: TextStyle(fontSize: 20, color: Colors.white),
+                          ),
                         ),
                       ),
                     ],
@@ -237,15 +235,15 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
                       Padding(
                         padding: const EdgeInsets.all(10),
                         child: GestureDetector(
-                          child: const Text(
-                            'Already registered? Login',
-                            style: TextStyle(fontSize: 20, color: Colors.white),
-                          ),
                           onTap: (() {
                             setState(() {
                               showLogin = true;
                             });
                           }),
+                          child: const Text(
+                            'Already registered? Login',
+                            style: TextStyle(fontSize: 20, color: Colors.white),
+                          ),
                         ),
                       ),
                     ],
