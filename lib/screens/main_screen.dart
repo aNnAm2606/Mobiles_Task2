@@ -18,6 +18,13 @@ class _MainScreenState extends State<MainScreen> {
       items: [
         IconButton(
           icon: const Icon(
+            Icons.home,
+          ),
+          color: Colors.white,
+          onPressed: () {},
+        ),
+        IconButton(
+          icon: const Icon(
             Icons.edit_calendar,
           ),
           color: Colors.white,

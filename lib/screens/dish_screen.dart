@@ -81,6 +81,15 @@ class _DishScreenState extends State<DishScreen> {
               items: [
                 IconButton(
                   icon: const Icon(
+                    Icons.calendar_month,
+                  ),
+                  color: Colors.white,
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/main');
+                  },
+                ),
+                IconButton(
+                  icon: const Icon(
                     Icons.edit_calendar,
                   ),
                   color: Colors.white,
@@ -93,9 +102,7 @@ class _DishScreenState extends State<DishScreen> {
                     Icons.search,
                   ),
                   color: Colors.white,
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/tryings');
-                  },
+                  onPressed: () {},
                 ),
                 IconButton(
                   icon: const Icon(
@@ -116,7 +123,7 @@ class _DishScreenState extends State<DishScreen> {
                   },
                 ),
               ],
-              index: 1,
+              index: 2,
               height: 50,
               color: Colors.white.withOpacity(0.5),
               buttonBackgroundColor: Colors.red,

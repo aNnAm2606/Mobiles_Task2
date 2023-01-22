@@ -219,8 +219,13 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
                             });
                           }),
                           child: const Text(
-                            'Not registered yet? Register',
-                            style: TextStyle(fontSize: 20, color: Colors.white),
+                            'Not registered Yet? Click to Register',
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.white,
+                              decoration: TextDecoration.underline,
+                            ),
+                            textAlign: TextAlign.center,
                           ),
                         ),
                       ),
@@ -241,8 +246,13 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
                             });
                           }),
                           child: const Text(
-                            'Already registered? Login',
-                            style: TextStyle(fontSize: 20, color: Colors.white),
+                            'Already registered? Click here to Login',
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.white,
+                              decoration: TextDecoration.underline,
+                            ),
+                            textAlign: TextAlign.center,
                           ),
                         ),
                       ),

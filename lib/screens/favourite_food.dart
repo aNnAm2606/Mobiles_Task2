@@ -37,11 +37,18 @@ class _FavouriteFoodState extends State<FavouriteFood> {
       items: [
         IconButton(
           icon: const Icon(
+            Icons.home,
+          ),
+          color: Colors.white,
+          onPressed: () {},
+        ),
+        IconButton(
+          icon: const Icon(
             Icons.calendar_month,
           ),
           color: Colors.white,
           onPressed: () {
-            Navigator.pushNamed(context, '/day');
+            Navigator.pushNamed(context, '/main');
           },
         ),
         IconButton(
@@ -58,9 +65,7 @@ class _FavouriteFoodState extends State<FavouriteFood> {
             Icons.star,
           ),
           color: Colors.white,
-          onPressed: () {
-            Navigator.pushNamed(context, '/favourite');
-          },
+          onPressed: () {},
         ),
         IconButton(
           icon: const Icon(
@@ -72,7 +77,7 @@ class _FavouriteFoodState extends State<FavouriteFood> {
           },
         ),
       ],
-      index: 2,
+      index: 3,
       height: 50,
       color: Colors.white.withOpacity(0.5),
       buttonBackgroundColor: Colors.red,
@@ -195,7 +200,7 @@ class _FavouriteFoodState extends State<FavouriteFood> {
           },
         ),
         floatingActionButton: FloatingActionButton(
-          backgroundColor: const Color.fromARGB(255, 255, 102, 64),
+          backgroundColor: Colors.red,
           onPressed: () {
             showDialog(
               context: context,
