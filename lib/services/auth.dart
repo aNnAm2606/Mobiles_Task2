@@ -1,16 +1,29 @@
+import 'package:deliverabl1task_2/services/database.dart';
+import 'package:deliverabl1task_2/services/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'users.dart';
 
 class AuthService {
   final FirebaseAuth _fAuth = FirebaseAuth.instance;
 
-  Future<AuthUser?> signInWithEmailAndPassword(
+  //create user object based on FirebaseUser
+  NowUser? _userFromFirebaseUser(User user) {
+    return user != null ? NowUser(uid: user.uid) : null;
+  }
+
+  Stream<NowUser> get user {
+    return _fAuth
+        .authStateChanges()
+        .map((User? user) => _userFromFirebaseUser(user!)!);
+  }
+
+  Future<NowUser?> signInWithEmailAndPassword(
       String email, String password) async {
     try {
       UserCredential result = await _fAuth.signInWithEmailAndPassword(
           email: email, password: password);
       User? user = result.user;
-      return AuthUser.fromFirebase(user!);
+      return _userFromFirebaseUser(user!);
     } on FirebaseException catch (error) {
       // ignore: avoid_print
       print(error);
@@ -23,7 +36,11 @@ class AuthService {
     try {
       UserCredential result = await _fAuth.createUserWithEmailAndPassword(
           email: email, password: password);
+
       User? user = result.user;
+      //create a new document for the user with the uid
+      await DatabaseService(uid: user?.uid)
+          .updateUserData('new memeber', '0', '0');
       return AuthUser.fromFirebase(user!);
     } on FirebaseException catch (error) {
       // ignore: avoid_print

@@ -1,6 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers, avoid_unnecessary_containers
 
 import 'package:deliverabl1task_2/services/auth.dart';
+import 'package:deliverabl1task_2/services/user.dart';
 import 'package:deliverabl1task_2/services/users.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -143,7 +144,7 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
 
       if (_email.isEmpty || _password.isEmpty) return;
 
-      AuthUser? user = await _authService.signInWithEmailAndPassword(
+      NowUser? user = await _authService.signInWithEmailAndPassword(
           _email.trim(), _password..trim());
       if (user == null) {
         Fluttertoast.showToast(
@@ -157,6 +158,8 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
       } else {
         _emailController.clear();
         _passwordController.clear();
+        print('Signed in');
+        print(user.uid);
       }
     }
 
