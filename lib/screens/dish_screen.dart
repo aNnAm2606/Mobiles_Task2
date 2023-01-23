@@ -14,6 +14,8 @@ class DishScreen extends StatefulWidget {
 
 class _DishScreenState extends State<DishScreen> {
   var iconPic = const Icon(Icons.star_border_outlined);
+  List<bool> iconFav = [];
+  
   int sectionIndex = 1;
 
   @override
@@ -30,6 +32,10 @@ class _DishScreenState extends State<DishScreen> {
           );
         }
         final userList = snapshot.data!;
+        for (var i = 0; i < userList.ingredients.length; i++ )
+        {
+          iconFav.add(false);
+        }
         return Scaffold(
             backgroundColor: Colors.grey[800],
             appBar: AppBar(
@@ -59,11 +65,11 @@ class _DishScreenState extends State<DishScreen> {
                     itemBuilder: (context, index) {
                       return ListTile(
                         trailing: IconButton(
-                          icon: iconPic,
+                          icon: iconFav[index]? Icon(Icons.star) : Icon(Icons.star_border_outlined),
                           color: const Color.fromARGB(255, 255, 255, 255),
                           onPressed: () {
                             setState(() {
-                              iconPic = const Icon(Icons.star);
+                              iconFav[index] = !iconFav[index];
                             });
                           },
                         ),
