@@ -97,7 +97,7 @@ class _DayScreenState extends State<DayScreen> {
           ],
         ),
         body: Padding(
-          padding: EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           child: SingleChildScrollView(
             child: Column(
               children: [
@@ -117,7 +117,7 @@ class _DayScreenState extends State<DayScreen> {
                       setState(
                         () {
                           bColor = (bColor == Colors.white
-                              ? Color.fromARGB(255, 54, 52, 52)
+                              ? const Color.fromARGB(255, 54, 52, 52)
                               : Colors.white);
                         },
                       );
@@ -156,7 +156,7 @@ class _DayScreenState extends State<DayScreen> {
                       setState(
                         () {
                           lColor = (lColor == Colors.white
-                              ? Color.fromARGB(255, 54, 52, 52)
+                              ? const Color.fromARGB(255, 54, 52, 52)
                               : Colors.white);
                         },
                       );
@@ -195,7 +195,7 @@ class _DayScreenState extends State<DayScreen> {
                       setState(
                         () {
                           dColor = (dColor == Colors.white
-                              ? Color.fromARGB(255, 54, 52, 52)
+                              ? const Color.fromARGB(255, 54, 52, 52)
                               : Colors.white);
                         },
                       );
@@ -236,7 +236,7 @@ class _DayScreenState extends State<DayScreen> {
                     onPressed: () {
                       setState(() {
                         sColor = (sColor == Colors.white
-                            ? Color.fromARGB(255, 54, 52, 52)
+                            ? const Color.fromARGB(255, 54, 52, 52)
                             : Colors.white);
                       });
                     },

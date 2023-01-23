@@ -126,24 +126,31 @@ class _GroupInfo extends StatelessWidget {
         //final docs = docSnap.docs;
         return Scaffold(
           body: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text(docSnap['group_name'],
-                    style: const TextStyle(fontSize: 24)),
-                const SizedBox(
-                  height: 10,
+            child:
+                Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+              Text(docSnap['group_name'], style: const TextStyle(fontSize: 24)),
+              const SizedBox(
+                height: 10,
+              ),
+              Text(
+                docSnap['member_01'],
+                style: const TextStyle(fontSize: 18),
+              ),
+              Text(
+                docSnap['member_02'],
+                style: const TextStyle(fontSize: 18),
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+                child: Column(
+                  children: [
+                    Text(docSnap['about'],
+                        style: const TextStyle(fontSize: 24)),
+                  ],
                 ),
-                Text(
-                  docSnap['member_01'],
-                  style: const TextStyle(fontSize: 18),
-                ),
-                Text(
-                  docSnap['member_02'],
-                  style: const TextStyle(fontSize: 18),
-                ),
-              ],
-            ),
+              ),
+            ]),
           ),
         );
       },
