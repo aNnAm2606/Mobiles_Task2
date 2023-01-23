@@ -20,7 +20,7 @@ class _AboutState extends State<About> {
       items: [
         IconButton(
           icon: const Icon(
-            Icons.calendar_month,
+            Icons.home,
           ),
           color: Colors.white,
           onPressed: () {
