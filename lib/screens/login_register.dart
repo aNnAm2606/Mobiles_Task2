@@ -158,8 +158,6 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
       } else {
         _emailController.clear();
         _passwordController.clear();
-        print('Signed in');
-        print(user.uid);
       }
     }
 

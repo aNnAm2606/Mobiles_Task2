@@ -1,6 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:deliverabl1task_2/services/auth.dart';
 import 'package:flutter/material.dart';
+import 'package:deliverabl1task_2/services/database.dart';
+import 'package:provider/provider.dart';
+
+import '../services/info.dart';
+import '../widgets/user_list.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -70,44 +76,52 @@ class _MainScreenState extends State<MainScreen> {
         setState(() => sectionIndex = index);
       },
     );
-    return Scaffold(
-        backgroundColor: Colors.grey[800],
-        appBar: AppBar(
-          title: const Text(
-            'FoodIZGood',
-            style: TextStyle(
-                fontSize: 35, fontWeight: FontWeight.bold, color: Colors.white),
-          ),
-          centerTitle: true,
-          backgroundColor: const Color.fromARGB(255, 255, 80, 64),
-          actions: [
-            IconButton(
-                color: Colors.white,
-                onPressed: (() {
-                  AuthService().logOut();
-                }),
-                icon: const Icon(Icons.exit_to_app))
-          ],
-        ),
-        body: Center(
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 20, top: 70),
-                child: newButtonDesign(context, 'day', 'Meal Diary'),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 20, top: 10),
-                child: newButtonDesign(context, 'tryings', 'Recipes'),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 20, top: 10),
-                child: newButtonDesign(context, 'favourite', 'Favourite Food'),
-              ),
+    return StreamProvider<List<Info?>?>.value(
+      initialData: null,
+      value: DatabaseService(uid: '').users,
+      child: Scaffold(
+          backgroundColor: Colors.grey[800],
+          appBar: AppBar(
+            title: const Text(
+              'FoodIZGood',
+              style: TextStyle(
+                  fontSize: 35,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white),
+            ),
+            centerTitle: true,
+            backgroundColor: const Color.fromARGB(255, 255, 80, 64),
+            actions: [
+              IconButton(
+                  color: Colors.white,
+                  onPressed: (() {
+                    AuthService().logOut();
+                  }),
+                  icon: const Icon(Icons.exit_to_app))
             ],
           ),
-        ),
-        bottomNavigationBar: curvedNavigationBar);
+          body: UserList(),
+          /* Center(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 20, top: 70),
+                  child: newButtonDesign(context, 'day', 'Meal Diary'),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 20, top: 10),
+                  child: newButtonDesign(context, 'tryings', 'Recipes'),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 20, top: 10),
+                  child:
+                      newButtonDesign(context, 'favourite', 'Favourite Food'),
+                ),
+              ],
+            ),
+          ), */
+          bottomNavigationBar: curvedNavigationBar),
+    );
   }
 
   SizedBox newButtonDesign(
