@@ -87,7 +87,7 @@ class _DishScreenState extends State<DishScreen> {
               items: [
                 IconButton(
                   icon: const Icon(
-                    Icons.calendar_month,
+                    Icons.home,
                   ),
                   color: Colors.white,
                   onPressed: () {

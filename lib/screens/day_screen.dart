@@ -26,7 +26,7 @@ class _DayScreenState extends State<DayScreen> {
       items: [
         IconButton(
           icon: const Icon(
-            Icons.calendar_month,
+            Icons.home,
           ),
           color: Colors.white,
           onPressed: () {
