@@ -8,6 +8,7 @@ import 'dart:math';
 
 import 'package:crypto/crypto.dart';
 import 'package:http/http.dart' as http;
+// ignore: depend_on_referenced_packages
 import 'package:http_parser/http_parser.dart';
 
 import 'authorization_exception.dart';

@@ -25,6 +25,7 @@ class _UserListState extends State<UserList> {
 
      
         return ListView.builder(
+          itemCount: users.length,
           itemBuilder: ((context, index) {
             return Padding(
               padding: EdgeInsets.only(top: 10),
@@ -43,7 +44,6 @@ class _UserListState extends State<UserList> {
             );
           }),
         );
-      
 
     } else {
       return Container();
