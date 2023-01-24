@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 
 import '../services/info.dart';
@@ -23,25 +22,29 @@ class _UserListState extends State<UserList> {
         print(user.height);
         print(user.weight);
       });
-      return ListView.builder(
-        itemBuilder: ((context, index) {
-          return Padding(
-            padding: EdgeInsets.only(top: 10),
-            child: Card(
-              margin: EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0),
-              child: ListTile(
-                leading: CircleAvatar(
-                  radius: 25.0,
-                  backgroundColor: Colors.redAccent,
+
+     
+        return ListView.builder(
+          itemBuilder: ((context, index) {
+            return Padding(
+              padding: EdgeInsets.only(top: 10),
+              child: Card(
+                margin: EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0),
+                child: ListTile(
+                  leading: CircleAvatar(
+                    radius: 25.0,
+                    backgroundColor: Colors.redAccent,
+                  ),
+                  title: Text(users[index]!.name),
+                  subtitle: Text(
+                      '${users[index]!.weight} kg, ${users[index]!.height} cm'),
                 ),
-                title: Text(users[index]!.name),
-                subtitle: Text(
-                    '${users[index]!.weight} kg, ${users[index]!.height} cm'),
               ),
-            ),
-          );
-        }),
-      );
+            );
+          }),
+        );
+      
+
     } else {
       return Container();
     }
