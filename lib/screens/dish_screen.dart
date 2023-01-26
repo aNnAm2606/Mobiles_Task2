@@ -15,8 +15,15 @@ class DishScreen extends StatefulWidget {
 class _DishScreenState extends State<DishScreen> {
   var iconPic = const Icon(Icons.star_border_outlined);
   List<bool> iconFav = [];
-  
+  final TextEditingController controller = TextEditingController();
+
   int sectionIndex = 1;
+
+@override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,6 +62,18 @@ class _DishScreenState extends State<DishScreen> {
             ),
             body: Column(
               children: [
+                Expanded(
+                  
+                child: TextField(
+                controller: controller,
+              ),
+            ),
+            IconButton(
+              icon: const Icon(Icons.send),
+              onPressed: () {
+               
+              },
+            ),
                 const Expanded(
                     flex: 1,
                     child: Text('Foods', style: TextStyle(fontSize: 20))),

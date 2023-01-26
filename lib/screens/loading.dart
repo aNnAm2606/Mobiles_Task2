@@ -11,20 +11,7 @@ class LoadingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var token = Uri(path: 'https://oauth.fatsecret.com/connect/token');
-    var endpoint = Uri(path: 'https://oauth.fatsecret.com/resources');
-    String ident = 'ea55506eb43a43c1a1c5a22f3fea8b7f';
-    String secre = 'a6c58822b9ca467782cd058675189781';
-    Uri redirect = Uri(path: 'https://platform.fatsecret.com/rest/server.api');
 
-    auth.AuthorizationCodeGrant info = auth.AuthorizationCodeGrant(ident, endpoint, token,
-      secret: secre,
-      basicAuth: true,
-      
-     // getParameters: (contentType, body) {},
-    );
-
-    Uri aux = info.getAuthorizationUrl(redirect);
     AuthUser? user = Provider.of<AuthUser?>(context);
     final bool isLoggedIn = user != null;
     return isLoggedIn ? const MainScreen() : const AuthorizationPage();
