@@ -30,7 +30,11 @@ class _DayScreenState extends State<DayScreen> {
           ),
           color: Colors.white,
           onPressed: () {
-            Navigator.pushNamed(context, '/main');
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              '/',
+              (route) => false,
+            );
           },
         ),
         IconButton(

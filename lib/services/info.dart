@@ -3,8 +3,8 @@
 class Info {
   final String name;
   final String gender;
-  var height;
-  var weight;
+  int height;
+  int weight;
 
-  Info({required this.name, required this.gender, this.height, this.weight});
+  Info({required this.name, required this.gender, required this.height, required this.weight});
 }

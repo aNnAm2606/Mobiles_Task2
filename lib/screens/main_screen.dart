@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:deliverabl1task_2/services/auth.dart';
+import 'package:deliverabl1task_2/widgets/settings_form.dart';
 import 'package:flutter/material.dart';
 import 'package:deliverabl1task_2/services/database.dart';
 import 'package:provider/provider.dart';
@@ -20,6 +21,18 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    void _showSettings() {
+      showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return Container(
+            padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
+            child: SettingsForm(),
+          );
+        },
+      );
+    }
+
     var curvedNavigationBar = CurvedNavigationBar(
       items: [
         IconButton(
@@ -93,6 +106,11 @@ class _MainScreenState extends State<MainScreen> {
             backgroundColor: const Color.fromARGB(255, 255, 80, 64),
             actions: [
               IconButton(
+                  onPressed: (() {
+                    _showSettings();
+                  }),
+                  icon: Icon(Icons.settings)),
+              IconButton(
                   color: Colors.white,
                   onPressed: (() {
                     AuthService().logOut();
@@ -101,25 +119,6 @@ class _MainScreenState extends State<MainScreen> {
             ],
           ),
           body: UserList(),
-          /* Center(
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 20, top: 70),
-                  child: newButtonDesign(context, 'day', 'Meal Diary'),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 20, top: 10),
-                  child: newButtonDesign(context, 'tryings', 'Recipes'),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 20, top: 10),
-                  child:
-                      newButtonDesign(context, 'favourite', 'Favourite Food'),
-                ),
-              ],
-            ),
-          ), */
           bottomNavigationBar: curvedNavigationBar),
     );
   }

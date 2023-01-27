@@ -40,15 +40,21 @@ class _FavouriteFoodState extends State<FavouriteFood> {
             Icons.home,
           ),
           color: Colors.white,
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              '/',
+              (route) => false,
+            );
+          },
         ),
         IconButton(
           icon: const Icon(
-            Icons.calendar_month,
+            Icons.edit_calendar,
           ),
           color: Colors.white,
           onPressed: () {
-            Navigator.pushNamed(context, '/main');
+            Navigator.pushNamed(context, '/day');
           },
         ),
         IconButton(

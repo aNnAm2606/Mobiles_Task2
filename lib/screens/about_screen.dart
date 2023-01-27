@@ -24,7 +24,11 @@ class _AboutState extends State<About> {
           ),
           color: Colors.white,
           onPressed: () {
-            Navigator.pushNamed(context, '/main');
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              '/',
+              (route) => false,
+            );
           },
         ),
         IconButton(

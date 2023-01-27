@@ -19,7 +19,7 @@ class _DishScreenState extends State<DishScreen> {
 
   int sectionIndex = 1;
 
-@override
+  @override
   void dispose() {
     controller.dispose();
     super.dispose();
@@ -39,8 +39,7 @@ class _DishScreenState extends State<DishScreen> {
           );
         }
         final userList = snapshot.data!;
-        for (var i = 0; i < userList.ingredients.length; i++ )
-        {
+        for (var i = 0; i < userList.ingredients.length; i++) {
           iconFav.add(false);
         }
         return Scaffold(
@@ -63,17 +62,14 @@ class _DishScreenState extends State<DishScreen> {
             body: Column(
               children: [
                 Expanded(
-                  
-                child: TextField(
-                controller: controller,
-              ),
-            ),
-            IconButton(
-              icon: const Icon(Icons.send),
-              onPressed: () {
-               
-              },
-            ),
+                  child: TextField(
+                    controller: controller,
+                  ),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.send),
+                  onPressed: () {},
+                ),
                 const Expanded(
                     flex: 1,
                     child: Text('Foods', style: TextStyle(fontSize: 20))),
@@ -84,7 +80,9 @@ class _DishScreenState extends State<DishScreen> {
                     itemBuilder: (context, index) {
                       return ListTile(
                         trailing: IconButton(
-                          icon: iconFav[index]? Icon(Icons.star) : Icon(Icons.star_border_outlined),
+                          icon: iconFav[index]
+                              ? Icon(Icons.star)
+                              : Icon(Icons.star_border_outlined),
                           color: const Color.fromARGB(255, 255, 255, 255),
                           onPressed: () {
                             setState(() {
@@ -110,7 +108,11 @@ class _DishScreenState extends State<DishScreen> {
                   ),
                   color: Colors.white,
                   onPressed: () {
-                    Navigator.pushNamed(context, '/main');
+                    Navigator.pushNamedAndRemoveUntil(
+                      context,
+                      '/',
+                      (route) => false,
+                    );
                   },
                 ),
                 IconButton(

@@ -24,7 +24,7 @@ class DatabaseService {
       return Info(
         name: doc.get('name') ?? " ",
         gender: doc.get('gender') ?? " ",
-        height: doc.get('height') ?? " ",
+        height: doc.get('height') ?? "",
         weight: doc.get('weight') ?? "",
       );
     }).toList();
