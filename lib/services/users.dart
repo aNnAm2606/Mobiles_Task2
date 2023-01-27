@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthUser {
-  String? id;
+  String? uid;
 
   AuthUser.fromFirebase(User? user) {
-    id = user!.uid;
+    uid = user!.uid;
   }
 }

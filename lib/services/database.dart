@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deliverabl1task_2/services/info.dart';
+import 'package:deliverabl1task_2/services/user.dart';
 
 class DatabaseService {
   final String? uid;
@@ -22,16 +23,33 @@ class DatabaseService {
   List<Info>? _infoListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {
       return Info(
-        name: doc.get('name') ?? " ",
-        gender: doc.get('gender') ?? " ",
+        name: doc.get('name') ?? "",
+        gender: doc.get('gender') ?? "",
         height: doc.get('height') ?? "",
         weight: doc.get('weight') ?? "",
       );
     }).toList();
   }
 
+  //User data from snapshot
+  UserData _userDataFromSnapshot(DocumentSnapshot snapshot) {
+    return UserData(
+      uid: uid!,
+      name: snapshot.get('name'),
+      gender: snapshot.get('gender'),
+      height: snapshot.get('height'),
+      weight: snapshot.get('weight'),
+    );
+  }
+
   //Get users stream
   Stream<List<Info?>?> get users {
     return userCollection.snapshots().map(_infoListFromSnapshot);
   }
+
+  //Get the user doc stream
+  Stream<UserData?> get userData {
+    return userCollection.doc(uid).snapshots().map(_userDataFromSnapshot);
+  }
+
 }

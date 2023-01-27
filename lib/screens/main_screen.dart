@@ -26,8 +26,8 @@ class _MainScreenState extends State<MainScreen> {
         context: context,
         builder: (context) {
           return Container(
-            padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
-            child: SettingsForm(),
+            padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
+            child: const SettingsForm(),
           );
         },
       );
@@ -109,7 +109,7 @@ class _MainScreenState extends State<MainScreen> {
                   onPressed: (() {
                     _showSettings();
                   }),
-                  icon: Icon(Icons.settings)),
+                  icon: const Icon(Icons.settings)),
               IconButton(
                   color: Colors.white,
                   onPressed: (() {
@@ -118,7 +118,7 @@ class _MainScreenState extends State<MainScreen> {
                   icon: const Icon(Icons.exit_to_app))
             ],
           ),
-          body: UserList(),
+          body: const UserList(),
           bottomNavigationBar: curvedNavigationBar),
     );
   }

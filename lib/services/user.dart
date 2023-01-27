@@ -3,3 +3,19 @@ class NowUser {
 
   NowUser({required this.uid});
 }
+
+class UserData {
+  
+  final String uid;
+  final String name;
+  final String gender;
+  int height;
+  int weight;
+
+  UserData(
+      {required this.uid,
+      required this.name,
+      required this.gender,
+      required this.height,
+      required this.weight});
+}
