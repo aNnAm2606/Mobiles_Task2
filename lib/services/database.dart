@@ -20,13 +20,13 @@ class DatabaseService {
   }
 
   //info list from snapshot
-  List<Info>? _infoListFromSnapshot(QuerySnapshot snapshot) {
+  List<Info?>? _infoListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {
       return Info(
         name: doc.get('name') ?? "",
-        gender: doc.get('gender') ?? "",
-        height: doc.get('height') ?? "",
-        weight: doc.get('weight') ?? "",
+        gender: doc.get('gender') ?? "a...",
+        height: doc.get('height') ?? 0,
+        weight: doc.get('weight') ?? 0,
       );
     }).toList();
   }

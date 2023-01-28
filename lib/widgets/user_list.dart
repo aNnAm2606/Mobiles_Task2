@@ -39,7 +39,7 @@ class _UserListState extends State<UserList> {
                   radius: 25.0,
                   backgroundColor: Colors.redAccent,
                 ),
-                title: Text(users[index]!.name),
+                title: Text(users[index]?.name?? 'No User Name'),
                 subtitle: Text(
                     '${users[index]!.weight} kg, ${users[index]!.height} cm'),
               ),
@@ -50,6 +50,7 @@ class _UserListState extends State<UserList> {
     } else {
       return Container(
         child: SpinKitChasingDots(
+          color: Colors.red,
           size: 50.0,
         ),
       );

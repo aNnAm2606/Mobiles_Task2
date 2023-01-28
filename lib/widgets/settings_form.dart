@@ -8,17 +8,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 
-const textInputDecoration = InputDecoration(
-  fillColor: Colors.white,
-  filled: true,
-  enabledBorder: OutlineInputBorder(
-    borderSide: BorderSide(color: Colors.white, width: 2.0),
-  ),
-  focusedBorder: OutlineInputBorder(
-    borderSide: BorderSide(color: Colors.red, width: 2.0),
-  ),
-);
-
 class SettingsForm extends StatefulWidget {
   const SettingsForm({super.key});
 
@@ -29,6 +18,7 @@ class SettingsForm extends StatefulWidget {
 class _SettingsFormState extends State<SettingsForm> {
   final _formKey = GlobalKey<FormState>();
   final List<String> gender = [
+    'a...',
     'a Female',
     'a Male',
     'a Non-binary',
@@ -38,27 +28,20 @@ class _SettingsFormState extends State<SettingsForm> {
 
   //form values
   String _currentName = '';
-  String _currentGender = '';
+  String _currentGender = 'a...';
   int _currentHeight = 0;
   int _currentWeight = 70;
-  
 
   @override
   Widget build(BuildContext context) {
     AuthUser? user = Provider.of<AuthUser?>(context);
 
     return StreamBuilder<UserData?>(
-      stream: DatabaseService(uid: user?.uid).userData,
+      stream: DatabaseService(uid: user!.uid).userData,
       builder: (context, snapshot) {
-        UserData? userData = snapshot.data;
-
-        //form values
-        String initialName = userData!.name;
-        String initialGender = userData.gender;
-        int initialHeight = userData.height;
-        int initialWeight = userData.weight;
-
         if (snapshot.hasData) {
+          UserData userData = snapshot.data!;
+
           return Form(
             key: _formKey,
             child: SingleChildScrollView(
@@ -72,7 +55,7 @@ class _SettingsFormState extends State<SettingsForm> {
                     height: 20.0,
                   ),
                   TextFormField(
-                    initialValue: initialName,
+                    initialValue: userData.name,
                     decoration: const InputDecoration(
                       fillColor: Colors.white,
                       filled: true,
@@ -87,7 +70,7 @@ class _SettingsFormState extends State<SettingsForm> {
                       labelText: 'Name *',
                     ),
                     validator: (val) =>
-                        val!.isNotEmpty ? null : 'Please enter a name',
+                        val!.isEmpty ? 'Please enter a name' : null,
                     onChanged: (val) => setState(() => _currentName = val),
                   ),
                   const SizedBox(
@@ -95,7 +78,7 @@ class _SettingsFormState extends State<SettingsForm> {
                   ),
                   //height
                   TextFormField(
-                    initialValue: initialHeight.toString(),
+                    initialValue: userData.height.toString(),
                     decoration: const InputDecoration(
                       fillColor: Colors.white,
                       filled: true,
@@ -113,15 +96,15 @@ class _SettingsFormState extends State<SettingsForm> {
                     inputFormatters: <TextInputFormatter>[
                       FilteringTextInputFormatter.digitsOnly
                     ],
-                    onChanged: (value) =>
-                        setState(() => _currentHeight = int.parse(value)),
+                    onChanged: (value) => setState(
+                        () => _currentHeight = int.tryParse(value) ?? 0),
                   ),
                   const SizedBox(
                     height: 20.0,
                   ),
                   //dropdown for age
                   DropdownButtonFormField<String>(
-                    value: initialGender,
+                    value: _currentGender ?? userData.gender,
                     hint: const Text('Who are you?'),
                     items: gender.map((gender) {
                       return DropdownMenuItem(
@@ -146,7 +129,7 @@ class _SettingsFormState extends State<SettingsForm> {
                   ),
                   Slider(
                     activeColor: Colors.red,
-                    value: (_currentWeight.toDouble()),
+                    value: (_currentWeight ?? userData.weight)!.toDouble(),
                     onChanged: (val) => setState(
                       () => _currentWeight = val.round(),
                     ),
@@ -161,12 +144,14 @@ class _SettingsFormState extends State<SettingsForm> {
                   ElevatedButton(
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
-                          await DatabaseService(uid: user!.uid).updateUserData(
-                              _currentName ?? initialName,
-                              _currentGender ?? initialGender,
-                              _currentHeight ?? initialHeight,
-                              _currentWeight ?? initialWeight);
-                        }
+                          await DatabaseService(uid: user.uid).updateUserData(
+                              _currentName ?? userData.name!,
+                              _currentGender ?? userData.gender!,
+                              _currentHeight ?? userData.height,
+                              _currentWeight ?? userData.weight);
+                        } 
+
+                       
 
                         Navigator.pop(context);
                       },
@@ -181,6 +166,7 @@ class _SettingsFormState extends State<SettingsForm> {
         } else {
           return Container(
             child: SpinKitChasingDots(
+              color: Colors.red,
               size: 50.0,
             ),
           );

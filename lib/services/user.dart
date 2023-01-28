@@ -1,16 +1,16 @@
 class NowUser {
-  final String uid;
+  final String? uid;
 
   NowUser({required this.uid});
 }
 
 class UserData {
-  
-  final String uid;
-  final String name;
-  final String gender;
-  int height;
-  int weight;
+
+  final String? uid;
+  final String? name;
+  final String? gender;
+  int? height;
+  int? weight;
 
   UserData(
       {required this.uid,
