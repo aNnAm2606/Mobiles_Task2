@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 class DayScreen extends StatefulWidget {
-  DayScreen({super.key});
+  const DayScreen({super.key});
 
   @override
   State<DayScreen> createState() => _DayScreenState();
@@ -14,11 +16,22 @@ class _DayScreenState extends State<DayScreen> {
   var bContainerHeight = 0.0;
   var lContainerHeight = 0.0;
   var dContainerHeight = 0.0;
-  var sContainerHeight = 0.0;
   var bColor = Colors.white;
   var lColor = Colors.white;
   var dColor = Colors.white;
-  var sColor = Colors.white;
+
+  String? _userKm;
+  String? _userActivities;
+  String? _userSleep;
+
+  String? km = '0 km';
+  String? activities = '';
+  String? sleep = '';
+
+  void initFirebase() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    await Firebase.initializeApp();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +63,11 @@ class _DayScreenState extends State<DayScreen> {
           ),
           color: Colors.white,
           onPressed: () {
-            Navigator.pushNamed(context, '/tryings');
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              '/tryings',
+              (route) => false,
+            );
           },
         ),
         IconButton(
@@ -59,7 +76,11 @@ class _DayScreenState extends State<DayScreen> {
           ),
           color: Colors.white,
           onPressed: () {
-            Navigator.pushNamed(context, '/favourite');
+            Navigator.restorablePushNamedAndRemoveUntil(
+              context,
+              '/favourite',
+              (route) => false,
+            );
           },
         ),
         IconButton(
@@ -68,7 +89,11 @@ class _DayScreenState extends State<DayScreen> {
           ),
           color: Colors.white,
           onPressed: () {
-            Navigator.pushNamed(context, '/about');
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              '/about',
+              (route) => false,
+            );
           },
         ),
       ],
@@ -112,7 +137,7 @@ class _DayScreenState extends State<DayScreen> {
                           (bContainerHeight == 0.0 ? 100.0 : 0.0);
                     });
                   },
-                  title: const Text('Breakfast'),
+                  title: const Text('Steps / Km to walk today Goal'),
                   textColor: Colors.white,
                   tileColor: Colors.red,
                   selectedTileColor: const Color.fromARGB(255, 255, 99, 64),
@@ -120,14 +145,35 @@ class _DayScreenState extends State<DayScreen> {
                     onPressed: () {
                       setState(
                         () {
-                          bColor = (bColor == Colors.white
-                              ? const Color.fromARGB(255, 54, 52, 52)
-                              : Colors.white);
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: const Text('Add a distance walked'),
+                                  content: TextField(
+                                    onChanged: (String value) {
+                                      _userKm = value;
+                                    },
+                                  ),
+                                  actions: [
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        FirebaseFirestore.instance
+                                            .collection('day_data')
+                                            .add({'km': _userKm});
+
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: const Text('Add'),
+                                    ),
+                                  ],
+                                );
+                              });
                         },
                       );
                     },
                     icon: Icon(
-                      Icons.breakfast_dining,
+                      Icons.nordic_walking,
                       color: bColor,
                     ),
                   ),
@@ -138,8 +184,57 @@ class _DayScreenState extends State<DayScreen> {
                     vertical: 0.0,
                     horizontal: 7,
                   ),
-                  child: const Card(),
                   height: bContainerHeight,
+                  child: StreamBuilder(
+                    stream: FirebaseFirestore.instance
+                        .collection('day_data')
+                        .snapshots(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<QuerySnapshot> snapshot) {
+                      if (!snapshot.hasData) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else {
+                        return ListView.builder(
+                          itemCount: snapshot.data!.docs.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            var data = snapshot.data!.docs[index].data()
+                                as Map<String, dynamic>;
+
+                            return Dismissible(
+                              key: Key(snapshot.data!.docs[index].id),
+                              child: Card(
+                                child: ListTile(
+                                  title: Text(
+                                    data['km'],
+                                  ),
+                                  trailing: IconButton(
+                                    onPressed: () {
+                                      FirebaseFirestore.instance
+                                          .collection('day_data')
+                                          .doc(snapshot.data!.docs[index].id)
+                                          .delete();
+                                    },
+                                    icon: const Icon(
+                                      Icons.delete,
+                                      color: Colors.deepOrange,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              onDismissed: (direction) {
+                                FirebaseFirestore.instance
+                                    .collection('km')
+                                    .doc(snapshot.data!.docs[index].id)
+                                    .delete();
+                              },
+                            );
+                          },
+                        );
+                      }
+                    },
+                  ),
                 ),
                 const Padding(padding: EdgeInsets.only(bottom: 10)),
                 ListTile(
@@ -151,7 +246,7 @@ class _DayScreenState extends State<DayScreen> {
                       },
                     );
                   },
-                  title: const Text('Lunch'),
+                  title: const Text('Activities Goal'),
                   textColor: Colors.white,
                   tileColor: Colors.red,
                   selectedTileColor: const Color.fromARGB(255, 255, 99, 64),
@@ -159,14 +254,37 @@ class _DayScreenState extends State<DayScreen> {
                     onPressed: () {
                       setState(
                         () {
-                          lColor = (lColor == Colors.white
-                              ? const Color.fromARGB(255, 54, 52, 52)
-                              : Colors.white);
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: const Text('Add an Activity'),
+                                  content: TextField(
+                                    onChanged: (String value) {
+                                      _userActivities = value;
+                                    },
+                                  ),
+                                  actions: [
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        FirebaseFirestore.instance
+                                            .collection('day_data_activities')
+                                            .add({
+                                          'activities': _userActivities
+                                        });
+
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: const Text('Add'),
+                                    ),
+                                  ],
+                                );
+                              });
                         },
                       );
                     },
                     icon: Icon(
-                      Icons.lunch_dining,
+                      Icons.sports_gymnastics,
                       color: lColor,
                     ),
                   ),
@@ -177,8 +295,57 @@ class _DayScreenState extends State<DayScreen> {
                     vertical: 0.0,
                     horizontal: 7,
                   ),
-                  child: const Card(),
                   height: lContainerHeight,
+                  child: StreamBuilder(
+                    stream: FirebaseFirestore.instance
+                        .collection('day_data_activities')
+                        .snapshots(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<QuerySnapshot> snapshot) {
+                      if (!snapshot.hasData) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else {
+                        return ListView.builder(
+                          itemCount: snapshot.data!.docs.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            var data = snapshot.data!.docs[index].data()
+                                as Map<String, dynamic>;
+
+                            return Dismissible(
+                              key: Key(snapshot.data!.docs[index].id),
+                              child: Card(
+                                child: ListTile(
+                                  title: Text(
+                                    data['activities'],
+                                  ),
+                                  trailing: IconButton(
+                                    onPressed: () {
+                                      FirebaseFirestore.instance
+                                          .collection('day_data_activities')
+                                          .doc(snapshot.data!.docs[index].id)
+                                          .delete();
+                                    },
+                                    icon: const Icon(
+                                      Icons.delete,
+                                      color: Colors.deepOrange,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              onDismissed: (direction) {
+                                FirebaseFirestore.instance
+                                    .collection('activities')
+                                    .doc(snapshot.data!.docs[index].id)
+                                    .delete();
+                              },
+                            );
+                          },
+                        );
+                      }
+                    },
+                  ),
                 ),
                 const Padding(padding: EdgeInsets.only(bottom: 10)),
                 ListTile(
@@ -190,7 +357,7 @@ class _DayScreenState extends State<DayScreen> {
                       },
                     );
                   },
-                  title: const Text('Dinner'),
+                  title: const Text('Hours of Sleep Goal'),
                   textColor: Colors.white,
                   tileColor: Colors.red,
                   selectedTileColor: const Color.fromARGB(255, 255, 99, 64),
@@ -198,14 +365,35 @@ class _DayScreenState extends State<DayScreen> {
                     onPressed: () {
                       setState(
                         () {
-                          dColor = (dColor == Colors.white
-                              ? const Color.fromARGB(255, 54, 52, 52)
-                              : Colors.white);
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: const Text('Add hours slept'),
+                                  content: TextField(
+                                    onChanged: (String value) {
+                                      _userSleep = value;
+                                    },
+                                  ),
+                                  actions: [
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        FirebaseFirestore.instance
+                                            .collection('day_data_sleep')
+                                            .add({'sleep': _userSleep});
+
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: const Text('Add'),
+                                    ),
+                                  ],
+                                );
+                              });
                         },
                       );
                     },
                     icon: Icon(
-                      Icons.dinner_dining,
+                      Icons.night_shelter,
                       color: dColor,
                     ),
                   ),
@@ -216,48 +404,58 @@ class _DayScreenState extends State<DayScreen> {
                     vertical: 0.0,
                     horizontal: 7,
                   ),
-                  child: const Card(
-                    color: Colors.white,
-                  ),
                   height: dContainerHeight,
                   curve: Curves.fastOutSlowIn,
-                ),
-                const Padding(padding: EdgeInsets.only(bottom: 10)),
-                ListTile(
-                  onTap: () {
-                    setState(
-                      () {
-                        sContainerHeight =
-                            (sContainerHeight == 0.0 ? 100.0 : 0.0);
-                      },
-                    );
-                  },
-                  title: const Text('Snacks'),
-                  textColor: Colors.white,
-                  tileColor: Colors.red,
-                  selectedTileColor: const Color.fromARGB(255, 255, 99, 64),
-                  trailing: IconButton(
-                    onPressed: () {
-                      setState(() {
-                        sColor = (sColor == Colors.white
-                            ? const Color.fromARGB(255, 54, 52, 52)
-                            : Colors.white);
-                      });
+                  child: StreamBuilder(
+                    stream: FirebaseFirestore.instance
+                        .collection('day_data_sleep')
+                        .snapshots(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<QuerySnapshot> snapshot) {
+                      if (!snapshot.hasData) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else {
+                        return ListView.builder(
+                          itemCount: snapshot.data!.docs.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            var data = snapshot.data!.docs[index].data()
+                                as Map<String, dynamic>;
+
+                            return Dismissible(
+                              key: Key(snapshot.data!.docs[index].id),
+                              child: Card(
+                                child: ListTile(
+                                  title: Text(
+                                    data['sleep'],
+                                  ),
+                                  trailing: IconButton(
+                                    onPressed: () {
+                                      FirebaseFirestore.instance
+                                          .collection('day_data_sleep')
+                                          .doc(snapshot.data!.docs[index].id)
+                                          .delete();
+                                    },
+                                    icon: const Icon(
+                                      Icons.delete,
+                                      color: Colors.deepOrange,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              onDismissed: (direction) {
+                                FirebaseFirestore.instance
+                                    .collection('sleep')
+                                    .doc(snapshot.data!.docs[index].id)
+                                    .delete();
+                              },
+                            );
+                          },
+                        );
+                      }
                     },
-                    icon: Icon(
-                      Icons.free_breakfast,
-                      color: sColor,
-                    ),
                   ),
-                ),
-                AnimatedContainer(
-                  duration: const Duration(milliseconds: 300),
-                  margin: const EdgeInsets.symmetric(
-                    vertical: 0.0,
-                    horizontal: 7,
-                  ),
-                  child: const Card(),
-                  height: bContainerHeight,
                 ),
               ],
             ),

@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import, prefer_const_constructors
+
 import 'package:deliverabl1task_2/firebase_options.dart';
 import 'package:deliverabl1task_2/screens/about_screen.dart';
 import 'package:deliverabl1task_2/screens/day_screen.dart';

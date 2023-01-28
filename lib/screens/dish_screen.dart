@@ -90,7 +90,11 @@ class _DishScreenState extends State<DishScreen> {
                             });
                           },
                         ),
-                        onTap: (() => Navigator.pushNamed(context, '/about')),
+                        onTap: (() => Navigator.pushNamedAndRemoveUntil(
+                              context,
+                              '/about',
+                              (route) => false,
+                            )),
                         title: Text(
                           userList.ingredients[index],
                         ),
@@ -121,7 +125,11 @@ class _DishScreenState extends State<DishScreen> {
                   ),
                   color: Colors.white,
                   onPressed: () {
-                    Navigator.pushNamed(context, '/day');
+                    Navigator.pushNamedAndRemoveUntil(
+                      context,
+                      '/day',
+                      (route) => false,
+                    );
                   },
                 ),
                 IconButton(
@@ -137,7 +145,11 @@ class _DishScreenState extends State<DishScreen> {
                   ),
                   color: Colors.white,
                   onPressed: () {
-                    Navigator.pushNamed(context, '/favourite');
+                    Navigator.pushNamedAndRemoveUntil(
+                      context,
+                      '/favourite',
+                      (route) => false,
+                    );
                   },
                 ),
                 IconButton(
@@ -146,7 +158,7 @@ class _DishScreenState extends State<DishScreen> {
                   ),
                   color: Colors.white,
                   onPressed: () {
-                    Navigator.pushNamed(context, '/about');
+                    Navigator.pushNamedAndRemoveUntil(context, '/about',(route) => false,);
                   },
                 ),
               ],

@@ -54,7 +54,11 @@ class _FavouriteFoodState extends State<FavouriteFood> {
           ),
           color: Colors.white,
           onPressed: () {
-            Navigator.pushNamed(context, '/day');
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              '/day',
+              (route) => false,
+            );
           },
         ),
         IconButton(
@@ -63,7 +67,11 @@ class _FavouriteFoodState extends State<FavouriteFood> {
           ),
           color: Colors.white,
           onPressed: () {
-            Navigator.pushNamed(context, '/tryings');
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              '/tryings',
+              (route) => false,
+            );
           },
         ),
         IconButton(
@@ -79,7 +87,11 @@ class _FavouriteFoodState extends State<FavouriteFood> {
           ),
           color: Colors.white,
           onPressed: () {
-            Navigator.pushNamed(context, '/about');
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              '/about',
+              (route) => false,
+            );
           },
         ),
       ],

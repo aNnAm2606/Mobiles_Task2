@@ -37,7 +37,11 @@ class _AboutState extends State<About> {
           ),
           color: Colors.white,
           onPressed: () {
-            Navigator.pushNamed(context, '/day');
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              '/day',
+              (route) => false,
+            );
           },
         ),
         IconButton(
@@ -46,7 +50,11 @@ class _AboutState extends State<About> {
           ),
           color: Colors.white,
           onPressed: () {
-            Navigator.pushNamed(context, '/tryings');
+            Navigator.restorablePushNamedAndRemoveUntil(
+              context,
+              '/tryings',
+              (route) => false,
+            );
           },
         ),
         IconButton(
@@ -55,7 +63,11 @@ class _AboutState extends State<About> {
           ),
           color: Colors.white,
           onPressed: () {
-            Navigator.pushNamed(context, '/favourite');
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              '/favourite',
+              (route) => false,
+            );
           },
         ),
         IconButton(
@@ -64,7 +76,11 @@ class _AboutState extends State<About> {
           ),
           color: Colors.white,
           onPressed: () {
-            Navigator.pushNamed(context, '/about');
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              '/about',
+              (route) => false,
+            );
           },
         ),
       ],
@@ -122,39 +138,42 @@ class _GroupInfo extends StatelessWidget {
           return ErrorWidget(snapshot.error.toString());
         }
         if (!snapshot.hasData) {
-          return const CircularProgressIndicator();
+          return const Center(child: CircularProgressIndicator());
         }
         final docSnap = snapshot.data!;
 
         //final docs = docSnap.data.;
         //final docs = docSnap.docs;
         return Scaffold(
-          body: Center(
-            child:
-                Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-              Text(docSnap['group_name'], style: const TextStyle(fontSize: 24)),
-              const SizedBox(
-                height: 10,
-              ),
-              Text(
-                docSnap['member_01'],
-                style: const TextStyle(fontSize: 18),
-              ),
-              Text(
-                docSnap['member_02'],
-                style: const TextStyle(fontSize: 18),
-              ),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
-                child: Column(
-                  children: [
-                    Text(docSnap['about'],
-                        style: const TextStyle(fontSize: 24)),
-                  ],
+          body: SingleChildScrollView(
+            child: Center(
+              child:
+                  Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+                Text(docSnap['group_name'],
+                    style: const TextStyle(fontSize: 24)),
+                const SizedBox(
+                  height: 10,
                 ),
-              ),
-            ]),
+                Text(
+                  docSnap['member_01'],
+                  style: const TextStyle(fontSize: 18),
+                ),
+                Text(
+                  docSnap['member_02'],
+                  style: const TextStyle(fontSize: 18),
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+                  child: Column(
+                    children: [
+                      Text(docSnap['about'],
+                          style: const TextStyle(fontSize: 24)),
+                    ],
+                  ),
+                ),
+              ]),
+            ),
           ),
         );
       },

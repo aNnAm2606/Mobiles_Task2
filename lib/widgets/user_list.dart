@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -41,14 +43,14 @@ class _UserListState extends State<UserList> {
                 ),
                 title: Text(users[index]?.name?? 'No User Name'),
                 subtitle: Text(
-                    '${users[index]!.weight} kg, ${users[index]!.height} cm'),
+                    '${users[index]!.gender}, ${users[index]!.weight} kg, ${users[index]!.height} cm'),
               ),
             ),
           );
         }),
       );
     } else {
-      return Container(
+      return const Center(
         child: SpinKitChasingDots(
           color: Colors.red,
           size: 50.0,

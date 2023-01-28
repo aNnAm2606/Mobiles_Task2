@@ -8,6 +8,7 @@ class AuthService {
 
   //create user object based on FirebaseUser
   NowUser? _userFromFirebaseUser(User user) {
+    // ignore: unnecessary_null_comparison
     return user != null ? NowUser(uid: user.uid) : null;
   }
 
@@ -41,7 +42,7 @@ class AuthService {
       //create a new document for the user with the uid
       await DatabaseService(uid: user!.uid)
           .updateUserData('new member', '0', 0, 0);
-      return AuthUser.fromFirebase(user!);
+      return AuthUser.fromFirebase(user);
     } on FirebaseException catch (error) {
       // ignore: avoid_print
       print(error);

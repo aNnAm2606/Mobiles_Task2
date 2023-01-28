@@ -2,6 +2,8 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
+// ignore_for_file: depend_on_referenced_packages
+
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 
@@ -60,6 +62,7 @@ Credentials handleAccessTokenResponse(http.Response response, Uri tokenEndpoint,
       }
     }
 
+    // ignore: todo
     // TODO(nweiz): support the "mac" token type
     // (http://tools.ietf.org/html/draft-ietf-oauth-v2-http-mac-01)
     if ((parameters['token_type'] as String).toLowerCase() != 'bearer') {

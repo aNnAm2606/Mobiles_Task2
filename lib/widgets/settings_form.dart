@@ -1,9 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+// ignore_for_file: prefer_const_constructors
+
 import 'package:deliverabl1task_2/services/database.dart';
-import 'package:deliverabl1task_2/services/info.dart';
 import 'package:deliverabl1task_2/services/user.dart';
 import 'package:deliverabl1task_2/services/users.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -125,7 +124,7 @@ class _SettingsFormState extends State<SettingsForm> {
                     child: Text(
                       'Your weight? $_currentWeight kg',
                       textAlign: TextAlign.left,
-                      style: TextStyle(fontSize: 16.0, color: Colors.black87),
+                      style: const TextStyle(fontSize: 16.0, color: Colors.black87),
                     ),
                   ),
                   Slider(
@@ -160,6 +159,7 @@ class _SettingsFormState extends State<SettingsForm> {
                                   : _currentWeight);
                         }
 
+                        // ignore: use_build_context_synchronously
                         Navigator.pop(context);
                       },
                       child: const Text(
@@ -171,8 +171,8 @@ class _SettingsFormState extends State<SettingsForm> {
             ),
           );
         } else {
-          return Container(
-            child: SpinKitChasingDots(
+          return Center(
+            child: const SpinKitChasingDots(
               color: Colors.red,
               size: 50.0,
             ),

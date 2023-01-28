@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import, no_leading_underscores_for_local_identifiers
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:deliverabl1task_2/services/auth.dart';
@@ -26,7 +28,8 @@ class _MainScreenState extends State<MainScreen> {
         context: context,
         builder: (context) {
           return Container(
-            padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
+            padding:
+                const EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
             child: const SettingsForm(),
           );
         },
@@ -48,7 +51,11 @@ class _MainScreenState extends State<MainScreen> {
           ),
           color: Colors.white,
           onPressed: () {
-            Navigator.pushNamed(context, '/day');
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              '/day',
+              (route) => false,
+            );
           },
         ),
         IconButton(
@@ -57,7 +64,11 @@ class _MainScreenState extends State<MainScreen> {
           ),
           color: Colors.white,
           onPressed: () {
-            Navigator.pushNamed(context, '/tryings');
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              '/tryings',
+              (route) => false,
+            );
           },
         ),
         IconButton(
@@ -66,7 +77,11 @@ class _MainScreenState extends State<MainScreen> {
           ),
           color: Colors.white,
           onPressed: () {
-            Navigator.pushNamed(context, '/favourite');
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              '/favourite',
+              (route) => false,
+            );
           },
         ),
         IconButton(
@@ -75,7 +90,11 @@ class _MainScreenState extends State<MainScreen> {
           ),
           color: Colors.white,
           onPressed: () {
-            Navigator.pushNamed(context, '/about');
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              '/about',
+              (route) => false,
+            );
           },
         ),
       ],
@@ -130,7 +149,11 @@ class _MainScreenState extends State<MainScreen> {
       width: 300,
       child: ElevatedButton(
         onPressed: () {
-          Navigator.pushNamed(context, '/$screen');
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            '/$screen',
+            (route) => false,
+          );
         },
         child: Text(
           buttonName,
