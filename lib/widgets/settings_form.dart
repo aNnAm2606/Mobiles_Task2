@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deliverabl1task_2/services/database.dart';
 import 'package:deliverabl1task_2/services/info.dart';
 import 'package:deliverabl1task_2/services/user.dart';
@@ -104,7 +105,7 @@ class _SettingsFormState extends State<SettingsForm> {
                   ),
                   //dropdown for age
                   DropdownButtonFormField<String>(
-                    value: _currentGender ?? userData.gender,
+                    value: _currentGender,
                     hint: const Text('Who are you?'),
                     items: gender.map((gender) {
                       return DropdownMenuItem(
@@ -129,7 +130,7 @@ class _SettingsFormState extends State<SettingsForm> {
                   ),
                   Slider(
                     activeColor: Colors.red,
-                    value: (_currentWeight ?? userData.weight)!.toDouble(),
+                    value: (_currentWeight).toDouble(),
                     onChanged: (val) => setState(
                       () => _currentWeight = val.round(),
                     ),
@@ -143,15 +144,14 @@ class _SettingsFormState extends State<SettingsForm> {
                   ),
                   ElevatedButton(
                       onPressed: () async {
+
                         if (_formKey.currentState!.validate()) {
                           await DatabaseService(uid: user.uid).updateUserData(
-                              _currentName ?? userData.name!,
-                              _currentGender ?? userData.gender!,
-                              _currentHeight ?? userData.height,
-                              _currentWeight ?? userData.weight);
-                        } 
-
-                       
+                              _currentName == '' ? userData.name! : _currentName,
+                              _currentGender == 'a...' ? userData.gender! : _currentGender,
+                              _currentHeight == 0 ? userData.height : _currentHeight,
+                              _currentWeight == 70 ? userData.height : _currentHeight);
+                        }
 
                         Navigator.pop(context);
                       },
