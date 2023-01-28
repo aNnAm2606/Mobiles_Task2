@@ -119,11 +119,11 @@ class _SettingsFormState extends State<SettingsForm> {
                     height: 20.0,
                   ),
                   //slider for weight
-                  const SizedBox(
+                  SizedBox(
                     height: 20.0,
                     width: 800.0,
                     child: Text(
-                      'Your weight?',
+                      'Your weight? $_currentWeight kg',
                       textAlign: TextAlign.left,
                       style: TextStyle(fontSize: 16.0, color: Colors.black87),
                     ),
@@ -144,13 +144,20 @@ class _SettingsFormState extends State<SettingsForm> {
                   ),
                   ElevatedButton(
                       onPressed: () async {
-
                         if (_formKey.currentState!.validate()) {
                           await DatabaseService(uid: user.uid).updateUserData(
-                              _currentName == '' ? userData.name! : _currentName,
-                              _currentGender == 'a...' ? userData.gender! : _currentGender,
-                              _currentHeight == 0 ? userData.height : _currentHeight,
-                              _currentWeight == 70 ? userData.height : _currentHeight);
+                              _currentName == ''
+                                  ? userData.name!
+                                  : _currentName,
+                              _currentGender == 'a...'
+                                  ? userData.gender!
+                                  : _currentGender,
+                              _currentHeight == 0
+                                  ? userData.height
+                                  : _currentHeight,
+                              _currentWeight == 70
+                                  ? userData.weight
+                                  : _currentWeight);
                         }
 
                         Navigator.pop(context);
