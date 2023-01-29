@@ -50,7 +50,7 @@ class _DishScreenState extends State<DishScreen> {
         return Scaffold(
             backgroundColor: Colors.grey[800],
             appBar: AppBar(
-              title: Text(userList.name),
+              title: Text('Search'),
               actions: [
                 IconButton(
                     color: Colors.white,
