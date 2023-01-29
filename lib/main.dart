@@ -8,6 +8,7 @@ import 'package:deliverabl1task_2/screens/loading.dart';
 import 'package:deliverabl1task_2/screens/main_screen.dart';
 import 'package:deliverabl1task_2/screens/favourite_food.dart';
 import 'package:deliverabl1task_2/screens/login_register.dart';
+import 'package:deliverabl1task_2/screens/search_screen.dart';
 import 'package:deliverabl1task_2/services/auth.dart';
 import 'package:deliverabl1task_2/services/users.dart';
 import 'package:flutter/material.dart';
@@ -56,9 +57,10 @@ UserAgent user = initUser();
           '/main': (context) => const MainScreen(),
           '/day': (context) => DayScreen(),
           '/favourite': (context) => const FavouriteFood(),
-          '/tryings': (context) => DishScreen(user: user),
+          '/tryings': (context) => DishScreen(),
           '/about': (context) => const About(),
           '/login': (context) => const AuthorizationPage(),
+          '/search':(context) => const SearchScreen(),
         },
       ),
     );

@@ -1,19 +1,15 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:deliverabl1task_2/screens/search_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
-import 'package:openfoodfacts/model/UserAgent.dart';
 import 'package:openfoodfacts/model/parameter/SearchTerms.dart';
 import 'package:openfoodfacts/openfoodfacts.dart';
-import 'package:openfoodfacts/utils/AbstractQueryConfiguration.dart';
-import 'package:openfoodfacts/utils/OpenFoodAPIConfiguration.dart';
-import 'package:openfoodfacts/utils/QueryType.dart';
 
 import '../model/food.dart';
 
 class DishScreen extends StatefulWidget {
-  const DishScreen({super.key, required UserAgent user});
+  const DishScreen({super.key});
 
   @override
   State<DishScreen> createState() => _DishScreenState();
@@ -75,23 +71,35 @@ class _DishScreenState extends State<DishScreen> {
                 ),
                 IconButton(
                   icon: const Icon(Icons.send),
-<<<<<<< Updated upstream
-                  onPressed: () {},
-=======
                   onPressed: () {
                     ProductSearchQueryConfiguration configuration =
                         ProductSearchQueryConfiguration(
                       parametersList: <Parameter>[
-                        //SearchTerms(terms: ['${controller.toString()}']),
-                       // PageSize(size: 2),
+                        SearchTerms(terms: ['${controller.value.text}']),
+                        
                       ],
                     );
                     OpenFoodAPIClient.searchProducts(
-                        User(userId: '', password: ''), configuration).then((value) {
-                          Navigator.pushNamed(context, '/main', arguments: value);
-                        });
+                            User(userId: '', password: ''), configuration)
+                        .then((value) {
+                      List<foodClass> valueList = [];
+
+                      for (var element in value.products!) {
+                        if (element.productName != null ) {
+                          if (element.imageFrontSmallUrl != null) {
+                          valueList.add(foodClass(element.productName, element.ingredients!, element.quantity!, element.imageFrontSmallUrl!));
+                          }
+                          else 
+                          {
+                             valueList.add(foodClass(element.productName, element.ingredients!, element.quantity!, ''));
+                          }
+                        }
+                      }
+
+                      Navigator.pushNamed(context, '/search',
+                          arguments: valueList);
+                    });
                   },
->>>>>>> Stashed changes
                 ),
                 const Expanded(
                     flex: 1,
@@ -113,11 +121,7 @@ class _DishScreenState extends State<DishScreen> {
                             });
                           },
                         ),
-                        onTap: (() => Navigator.pushNamedAndRemoveUntil(
-                              context,
-                              '/about',
-                              (route) => false,
-                            )),
+                        onTap: (() => Navigator.pushNamed(context, '/about')),
                         title: Text(
                           userList.ingredients[index],
                         ),
@@ -148,11 +152,7 @@ class _DishScreenState extends State<DishScreen> {
                   ),
                   color: Colors.white,
                   onPressed: () {
-                    Navigator.pushNamedAndRemoveUntil(
-                      context,
-                      '/day',
-                      (route) => false,
-                    );
+                    Navigator.pushNamed(context, '/day');
                   },
                 ),
                 IconButton(
@@ -168,11 +168,7 @@ class _DishScreenState extends State<DishScreen> {
                   ),
                   color: Colors.white,
                   onPressed: () {
-                    Navigator.pushNamedAndRemoveUntil(
-                      context,
-                      '/favourite',
-                      (route) => false,
-                    );
+                    Navigator.pushNamed(context, '/favourite');
                   },
                 ),
                 IconButton(
@@ -181,7 +177,7 @@ class _DishScreenState extends State<DishScreen> {
                   ),
                   color: Colors.white,
                   onPressed: () {
-                    Navigator.pushNamedAndRemoveUntil(context, '/about',(route) => false,);
+                    Navigator.pushNamed(context, '/about');
                   },
                 ),
               ],
