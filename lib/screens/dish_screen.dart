@@ -2,11 +2,18 @@
 
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+import 'package:openfoodfacts/model/UserAgent.dart';
+import 'package:openfoodfacts/model/parameter/SearchTerms.dart';
+import 'package:openfoodfacts/openfoodfacts.dart';
+import 'package:openfoodfacts/utils/AbstractQueryConfiguration.dart';
+import 'package:openfoodfacts/utils/OpenFoodAPIConfiguration.dart';
+import 'package:openfoodfacts/utils/QueryType.dart';
 
 import '../model/food.dart';
 
 class DishScreen extends StatefulWidget {
-  const DishScreen({super.key});
+  const DishScreen({super.key, required UserAgent user});
 
   @override
   State<DishScreen> createState() => _DishScreenState();
@@ -68,7 +75,23 @@ class _DishScreenState extends State<DishScreen> {
                 ),
                 IconButton(
                   icon: const Icon(Icons.send),
+<<<<<<< Updated upstream
                   onPressed: () {},
+=======
+                  onPressed: () {
+                    ProductSearchQueryConfiguration configuration =
+                        ProductSearchQueryConfiguration(
+                      parametersList: <Parameter>[
+                        //SearchTerms(terms: ['${controller.toString()}']),
+                       // PageSize(size: 2),
+                      ],
+                    );
+                    OpenFoodAPIClient.searchProducts(
+                        User(userId: '', password: ''), configuration).then((value) {
+                          Navigator.pushNamed(context, '/main', arguments: value);
+                        });
+                  },
+>>>>>>> Stashed changes
                 ),
                 const Expanded(
                     flex: 1,

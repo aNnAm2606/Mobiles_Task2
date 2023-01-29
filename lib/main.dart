@@ -12,6 +12,9 @@ import 'package:deliverabl1task_2/services/auth.dart';
 import 'package:deliverabl1task_2/services/users.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:openfoodfacts/model/UserAgent.dart';
+import 'package:openfoodfacts/utils/CountryHelper.dart';
+import 'package:openfoodfacts/utils/OpenFoodAPIConfiguration.dart';
 import 'package:provider/provider.dart';
 import 'package:openfoodfacts/openfoodfacts.dart';
 
@@ -20,15 +23,22 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  
   runApp(
-    const MyApp(),
+     MyApp(),
   );
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({
+  
+
+   MyApp({
     Key? key,
+   
   }) : super(key: key);
+
+UserAgent user = initUser();
 
   @override
   Widget build(BuildContext context) {
@@ -46,11 +56,20 @@ class MyApp extends StatelessWidget {
           '/main': (context) => const MainScreen(),
           '/day': (context) => DayScreen(),
           '/favourite': (context) => const FavouriteFood(),
-          '/tryings': (context) => const DishScreen(),
+          '/tryings': (context) => DishScreen(user: user),
           '/about': (context) => const About(),
           '/login': (context) => const AuthorizationPage(),
         },
       ),
     );
   }
+}
+
+UserAgent initUser(){
+  OpenFoodAPIConfiguration.userAgent = UserAgent(name: 'name');
+  OpenFoodAPIConfiguration.globalLanguages = <OpenFoodFactsLanguage>[
+    OpenFoodFactsLanguage.ENGLISH
+  ];
+  OpenFoodAPIConfiguration.globalCountry = OpenFoodFactsCountry.SPAIN;
+return OpenFoodAPIConfiguration.userAgent!;
 }
