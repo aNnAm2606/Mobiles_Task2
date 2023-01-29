@@ -3,6 +3,8 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:deliverabl1task_2/screens/search_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:openfoodfacts/model/NutrientLevels.dart';
+import 'package:openfoodfacts/model/Nutriments.dart';
 import 'package:openfoodfacts/model/parameter/SearchTerms.dart';
 import 'package:openfoodfacts/openfoodfacts.dart';
 
@@ -62,7 +64,7 @@ class _DishScreenState extends State<DishScreen> {
                     icon: const Icon(Icons.home))
               ],
             ),
-            body: Column(
+            body: Row(    
               children: [
                 Expanded(
                   child: TextField(
@@ -75,25 +77,38 @@ class _DishScreenState extends State<DishScreen> {
                     ProductSearchQueryConfiguration configuration =
                         ProductSearchQueryConfiguration(
                       parametersList: <Parameter>[
-                        SearchTerms(terms: ['${controller.value.text}']),
-                        
+                        SearchTerms(terms: [(controller.value.text)]),
                       ],
                     );
                     OpenFoodAPIClient.searchProducts(
                             User(userId: '', password: ''), configuration)
                         .then((value) {
-                      List<foodClass> valueList = [];
+                      List<FoodClass> valueList = [];
 
                       for (var element in value.products!) {
-                        if (element.productName != null ) {
-                          if (element.imageFrontSmallUrl != null) {
-                          valueList.add(foodClass(element.productName, element.ingredients!, element.quantity!, element.imageFrontSmallUrl!));
-                          }
-                          else 
-                          {
-                             valueList.add(foodClass(element.productName, element.ingredients!, element.quantity!, ''));
-                          }
-                        }
+                        valueList.add(
+                          FoodClass(
+                            element.productName != null
+                                ? element.productName!
+                                : '',
+                            element.ingredients != null
+                                ? element.ingredients!
+                                : [],
+                                element.brands != null
+                                ? element.brands!
+                                : '',
+                            element.quantity != null ? element.quantity! : '',
+                            element.nutriments != null ? element.nutriments! : [] as Nutriments,
+                            element.nutrientLevels != null ? element.nutrientLevels! : [] as NutrientLevels,
+                            element.imageFrontSmallUrl != null
+                                ? element.imageFrontSmallUrl!
+                                : '',
+                                element.imageFrontUrl != null
+                                ? element.imageFrontUrl!
+                                : '',
+                            element.barcode != null ? element.barcode! : '',
+                          ),
+                        );
                       }
 
                       Navigator.pushNamed(context, '/search',
@@ -101,36 +116,28 @@ class _DishScreenState extends State<DishScreen> {
                     });
                   },
                 ),
-                const Expanded(
-                    flex: 1,
-                    child: Text('Foods', style: TextStyle(fontSize: 20))),
-                Expanded(
-                  flex: 11,
-                  child: ListView.builder(
-                    itemCount: userList.ingredients.length,
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        trailing: IconButton(
-                          icon: iconFav[index]
-                              ? Icon(Icons.star)
-                              : Icon(Icons.star_border_outlined),
-                          color: const Color.fromARGB(255, 255, 255, 255),
-                          onPressed: () {
-                            setState(() {
-                              iconFav[index] = !iconFav[index];
-                            });
-                          },
-                        ),
-                        onTap: (() => Navigator.pushNamed(context, '/about')),
-                        title: Text(
-                          userList.ingredients[index],
-                        ),
-                      );
-                    },
-                  ),
-                )
+                
+
+                //    trailing: IconButton(
+                //      icon: iconFav[index]
+                //          ? Icon(Icons.star)
+                //          : Icon(Icons.star_border_outlined),
+                //      color: const Color.fromARGB(255, 255, 255, 255),
+                //      onPressed: () {
+                //        setState(() {
+                //          iconFav[index] = !iconFav[index];
+                //        });
+                //      },
+                //    ),
+                //    onTap: (() => Navigator.pushNamed(context, '/about')),
+                //    title: Text(
+                //      userList.ingredients[index],
+                //    ),
+                //  );
+                //},
               ],
             ),
+             
             bottomNavigationBar: CurvedNavigationBar(
               items: [
                 IconButton(

@@ -1,7 +1,12 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:deliverabl1task_2/screens/search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:openfoodfacts/model/NutrientLevels.dart';
+import 'package:openfoodfacts/model/Nutriments.dart';
+import 'package:openfoodfacts/model/parameter/BarcodeParameter.dart';
+import 'package:openfoodfacts/openfoodfacts.dart';
 
 class FavouriteFood extends StatefulWidget {
   const FavouriteFood({super.key});
@@ -156,6 +161,51 @@ class _FavouriteFoodState extends State<FavouriteFood> {
                           title: Text(
                             data['name'],
                           ),
+                          onTap: () {
+                            if (data['barcode'] != null) {
+                              ProductSearchQueryConfiguration configuration =
+                                  ProductSearchQueryConfiguration(
+                                parametersList: <Parameter>[
+                                  BarcodeParameter(data['barcode']),
+                                ],
+                              );
+                              OpenFoodAPIClient.searchProducts(
+                                      const User(userId: '', password: ''),
+                                      configuration)
+                                  .then(
+                                (value) {
+                                  FoodClass aux = FoodClass(
+                                    value.products![0].productName != null
+                                        ? value.products![0].productName!
+                                        : '',
+                                    value.products![0].ingredients != null
+                                        ? value.products![0].ingredients!
+                                        : [],
+                                        value.products![0].brands != null
+                                ? value.products![0].brands!
+                                : '',
+                                    value.products![0].quantity != null
+                                        ? value.products![0].quantity!
+                                        : '',
+                                         value.products![0].nutriments != null ?  value.products![0].nutriments! : [] as Nutriments,
+                             value.products![0].nutrientLevels != null ?  value.products![0].nutrientLevels! : [] as NutrientLevels,
+                                    value.products![0].imageFrontSmallUrl !=
+                                            null
+                                        ? value.products![0].imageFrontSmallUrl!
+                                        : '',
+                                         value.products![0].imageFrontUrl != null
+                                ?  value.products![0].imageFrontUrl!
+                                : '',
+                                    value.products![0].barcode != null
+                                        ? value.products![0].barcode!
+                                        : '',
+                                  );
+                                  Navigator.pushNamed(context, '/food',
+                                      arguments: aux);
+                                },
+                              );
+                            }
+                          },
                           trailing: IconButton(
                             onPressed: () {
                               FirebaseFirestore.instance
@@ -189,6 +239,49 @@ class _FavouriteFoodState extends State<FavouriteFood> {
                           title: Text(
                             data['name'],
                           ),
+                          onLongPress: () {
+                            if (data['barcode'] != null) {
+                              ProductSearchQueryConfiguration configuration =
+                                  ProductSearchQueryConfiguration(
+                                parametersList: <Parameter>[
+                                  BarcodeParameter(data['barcode']),
+                                ],
+                              );
+                              OpenFoodAPIClient.searchProducts(
+                                      const User(userId: '', password: ''),
+                                      configuration)
+                                  .then((value) {
+                                  FoodClass aux = FoodClass(
+                                    value.products![0].productName != null
+                                        ? value.products![0].productName!
+                                        : '',
+                                    value.products![0].ingredients != null
+                                        ? value.products![0].ingredients!
+                                        : [],
+                                        value.products![0].brands != null
+                                ? value.products![0].brands!
+                                : '',
+                                    value.products![0].quantity != null
+                                        ? value.products![0].quantity!
+                                        : '',
+                                         value.products![0].nutriments != null ?  value.products![0].nutriments! : [] as Nutriments,
+                             value.products![0].nutrientLevels != null ?  value.products![0].nutrientLevels! : [] as NutrientLevels,
+                                    value.products![0].imageFrontSmallUrl !=
+                                            null
+                                        ? value.products![0].imageFrontSmallUrl!
+                                        : '',
+                                         value.products![0].imageFrontUrl != null
+                                ?  value.products![0].imageFrontUrl!
+                                : '',
+                                    value.products![0].barcode != null
+                                        ? value.products![0].barcode!
+                                        : '',
+                                  );
+                                  Navigator.pushNamed(context, '/food',
+                                      arguments: aux);
+                                },);
+                            }
+                          },
                           trailing: IconButton(
                             onPressed: () {
                               FirebaseFirestore.instance

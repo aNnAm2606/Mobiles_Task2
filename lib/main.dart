@@ -4,6 +4,7 @@ import 'package:deliverabl1task_2/firebase_options.dart';
 import 'package:deliverabl1task_2/screens/about_screen.dart';
 import 'package:deliverabl1task_2/screens/day_screen.dart';
 import 'package:deliverabl1task_2/screens/dish_screen.dart';
+import 'package:deliverabl1task_2/screens/food_screen.dart';
 import 'package:deliverabl1task_2/screens/loading.dart';
 import 'package:deliverabl1task_2/screens/main_screen.dart';
 import 'package:deliverabl1task_2/screens/favourite_food.dart';
@@ -31,6 +32,7 @@ void main() async {
   );
 }
 
+// ignore: must_be_immutable
 class MyApp extends StatelessWidget {
   
 
@@ -61,6 +63,7 @@ UserAgent user = initUser();
           '/about': (context) => const About(),
           '/login': (context) => const AuthorizationPage(),
           '/search':(context) => const SearchScreen(),
+          '/food':(context) => const FoodScreen(),
         },
       ),
     );
